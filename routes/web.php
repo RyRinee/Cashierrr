@@ -15,4 +15,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/productlist', function () {
         return view('product.list');
     })->name('productlist');
+    Route::get('/employeeList', function () {
+        return view('employee.index');
+    })->name('employeeList');
 });
