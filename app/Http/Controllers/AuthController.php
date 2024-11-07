@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function signinview()
     {
         return view('auth.signin');
     }
@@ -22,11 +22,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $role = Auth::user()->role;
             if($role === 'admin'){
-                return redirect()->intended('dashboard');
+                return redirect()->intended('admindash');
             }elseif($role === 'employee'){
-                return redirect()->intended('employee');
+                return redirect()->intended('employeedash');
             }elseif($role === 'customer'){
-                return redirect()->intended('customer');
+                return redirect()->intended('customerdash');
             }
         }else{
             return redirect('/login')->with('failed', 'Email atau Password Salah');
