@@ -20,16 +20,16 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $role = auth()->user()->role;
+            $role = Auth::user()->role;
             if($role === 'admin'){
-                return redirect()->intended('index');
+                return redirect()->intended('dashboard');
             }elseif($role === 'employee'){
-                return redirect()->intended('teacherdash');
+                return redirect()->intended('employee');
             }elseif($role === 'customer'){
-                return redirect()->intended('studentdash');
+                return redirect()->intended('customer');
             }
         }else{
-            return redirect('/')->with('failed', 'Email atau Password Salah');
+            return redirect('/login')->with('failed', 'Email atau Password Salah');
         }
     }
 }
