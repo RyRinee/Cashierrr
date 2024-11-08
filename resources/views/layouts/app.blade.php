@@ -19,6 +19,9 @@
 
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
 
+    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+
+
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
 
@@ -491,6 +494,11 @@
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/plugins/select2/js/select2.min.js"></script>
+
+    <script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+    <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
 
     <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
     <script src="assets/plugins/apexchart/chart-data.js"></script>
