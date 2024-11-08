@@ -12,7 +12,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        return view('menu.list');
     }
 
     /**
@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('menu.add');
     }
 
     /**
@@ -28,7 +28,17 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+            'status' => 'required',
+        ]);
+
+        Menu::create($request->all());
     }
 
     /**

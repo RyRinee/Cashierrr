@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenuController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'signinview')->name('login');
@@ -12,9 +13,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/adminDash', function () {
         return view('dashboard.admin');
     })->name('adminDash');
-    Route::get('/productList', function () {
-        return view('product.list');
-    })->name('productList');
+    Route::controller(MenuController::class)->group(function () {
+        Route::get('/menuList', 'index')->name('menuList');
+        Route::get('/menuAdd', 'create')->name('menuAdd');
+        Route::post('/createMenu', 'store')->name('createMenu');
+    });
     Route::get('/employeeList', function () {
         return view('employee.list');
     })->name('employeeList');

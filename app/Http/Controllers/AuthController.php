@@ -22,11 +22,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $role = Auth::user()->role;
             if($role === 'admin'){
-                return redirect()->intended('admindash');
+                return redirect()->intended('adminDash');
             }elseif($role === 'employee'){
-                return redirect()->intended('employeedash');
+                return redirect()->intended('employeeDash');
             }elseif($role === 'customer'){
-                return redirect()->intended('customerdash');
+                return redirect()->intended('customerDash');
             }
         }else{
             return redirect('/login')->with('failed', 'Email atau Password Salah');

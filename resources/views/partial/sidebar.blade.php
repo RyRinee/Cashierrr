@@ -11,7 +11,7 @@
                     <a href="javascript:void(0);"><img src="assets/img/icons/product.svg"
                             alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('productlist') }}">Product List</a></li>
+                        <li><a href="{{ route('menuList') }}">Product List</a></li>
                         <li><a href="addproduct.html">Add Product</a></li>
                         <li><a href="categorylist.html">Category List</a></li>
                         <li><a href="addcategory.html">Add Category</a></li>
