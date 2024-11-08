@@ -267,8 +267,8 @@
                             <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg" alt="img"><span>
                                     Employee</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('employee.list')}}">Employee List</a></li>
-                                <li><a href="{{route('employee.addEmployee')}}">Add Employee </a></li>
+                                <li><a href="{{route('employeeList')}}">Employee List</a></li>
+                                <li><a href="{{route('addEmployee')}}">Add Employee </a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -314,6 +314,9 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div>
+            @yield('content');
         </div>
     </div>
 
