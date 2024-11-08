@@ -6,10 +6,13 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
 use App\Models\Employee;
 
+
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'signinview')->name('login');
     Route::post('/login', 'authenticate')->name('login');
 });
+
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/adminDash', function () {
@@ -28,6 +31,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('addEmployee');
 });
 
+
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employeeDash', function () {
         return view('employee.dashboard');
@@ -35,9 +39,10 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employeeList', 'index')->name('employeeList');
         Route::get('/addEmployee', 'create')->name('addEmployee');
+        Route::get('/editEmployee', 'store')->name('editEmployee');
     });
 });
 
-Route::middleware(['auth', 'role:delivery'])->group(function () {});
 
+Route::middleware(['auth', 'role:delivery'])->group(function () {});
 Route::middleware(['auth', 'role:customer'])->group(function () {});

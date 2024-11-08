@@ -29,6 +29,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        return view('employee.editEmployee');
     }
 
     /**
