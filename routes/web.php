@@ -9,13 +9,31 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admindash', function () {
+    Route::get('/adminDash', function () {
         return view('dashboard.admin');
-    })->name('admindash');
-    Route::get('/productlist', function () {
+    })->name('adminDash');
+    Route::get('/productList', function () {
         return view('product.list');
-    })->name('productlist');
+    })->name('productList');
     Route::get('/employeeList', function () {
-        return view('employee.index');
+        return view('employee.list');
     })->name('employeeList');
+    Route::get('/addEmployee', function () {
+        return view('employee.addEmployee');
+    })->name('addEmployee');
+});
+
+Route::middleware(['auth', 'role:employee'])->group(function () {
+    Route::get('/employeeDash', function () {
+        return view('employee.dashboard');
+    })->name('employeeDash');
+    Route::get('/employeeList', function () {
+        return view('employee.list');
+    })->name('employeeList');
+});
+
+Route::middleware(['auth', 'role:delivery'])->group(function () {
+});
+
+Route::middleware(['auth', 'role:customer'])->group(function () {
 });
