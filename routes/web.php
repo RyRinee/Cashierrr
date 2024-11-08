@@ -20,7 +20,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('adminDash');
     Route::controller(MenuController::class)->group(function () {
         Route::get('/menuList', 'index')->name('menuList');
-        Route::get('/menuAdd', 'create')->name('menuAdd');
+        Route::get('/addMenu', 'create')->name('addMenu');
         Route::post('/createMenu', 'store')->name('createMenu');
     });
     Route::get('/employeeList', function () {

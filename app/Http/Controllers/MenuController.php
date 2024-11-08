@@ -12,7 +12,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('menu.list');
+        return view('menu.menuList');
     }
 
     /**
@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.add');
+        return view('menu.addMenu');
     }
 
     /**
@@ -28,17 +28,29 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'required',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|in:makanan,minuman',
             'price' => 'required',
             'stock' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'status' => 'required',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096', // Validasi gambar dengan tipe tertentu dan maksimum ukuran 2MB
+            'status' => 'required|string|in:tersedia,habis',
         ]);
 
-        Menu::create($request->all());
+        $input = $validatedData;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . $image->getClientOriginalName();
+            $request->image->move(public_path('storage/image'), $image_name);
+
+            $input['image'] = $image_name;
+        }
+
+        Menu::create($input);
+
+        return redirect('menus')->with('successcreate', 'Menu Baru Ditambahkan');
     }
 
     /**
