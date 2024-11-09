@@ -22,6 +22,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/menuList', 'index')->name('menuList');
         Route::get('/addMenu', 'create')->name('addMenu');
         Route::post('/createMenu', 'store')->name('createMenu');
+
+        Route::get('/editMenu/{menu}', 'edit')->name('editMenu');
+        Route::post('/updateMenu/{menu}', 'update')->name('updateMenu');
+
+        Route::get('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
     });
     Route::get('/employeeList', function () {
         return view('employee.list');

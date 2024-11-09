@@ -151,18 +151,12 @@
                                         <td>{{ $menu->stock }}</td>
                                         <td>{{ $menu->status }}</td>
                                         <td>
-                                            {{-- <a class="me-3" href="{{ route('product.details', $menu->id) }}">
+                                            <a class="me-3" href="#">
                                                 <img src="assets/img/icons/eye.svg" alt="img">
                                             </a>
-                                            <a class="me-3" href="{{ route('product.edit', $menu->id) }}">
+                                            <a class="me-3" href="{{ route('editMenu', $menu->id) }}">
                                                 <img src="assets/img/icons/edit.svg" alt="img">
-                                            </a> --}}
-                                            <a class="me-3" href="#">
-                                                <img src="assets/img/icons/eye.svg" alt="img">
-                                            </a> 
-                                            <a class="me-3" href="#">
-                                                <img src="assets/img/icons/edit.svg" alt="img">
-                                            </a> 
+                                            </a>
                                             <a class="confirm-text" href="javascript:void(0);">
                                                 <img src="assets/img/icons/delete.svg" alt="img">
                                             </a>
