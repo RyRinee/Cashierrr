@@ -12,7 +12,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('menu.menuList');
+        $menus = Menu::all();
+        return view('menu.menuList', compact('menus'));
     }
 
     /**
@@ -28,30 +29,37 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|in:makanan,minuman',
-            'price' => 'required',
-            'stock' => 'required',
-            'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096', // Validasi gambar dengan tipe tertentu dan maksimum ukuran 2MB
-            'status' => 'required|string|in:tersedia,habis',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'required|string|max:500',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
-
+    
+        // Tentukan status berdasarkan stok
+        $status = ($validatedData['stock'] > 0) ? 'tersedia' : 'habis';
+    
+        // Menyiapkan data input untuk disimpan
         $input = $validatedData;
-
+        $input['status'] = $status; // Menetapkan status otomatis
+    
+        // Menyimpan gambar dengan Storage
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = time() . $image->getClientOriginalName();
-            $request->image->move(public_path('storage/image'), $image_name);
-
+            $image_name = time() . '-' . $image->getClientOriginalName();
+            $image->move(public_path('storage/image'), $image_name);
             $input['image'] = $image_name;
         }
-
+    
+        // Menyimpan menu ke dalam database
         Menu::create($input);
-
-        return redirect('menus')->with('successcreate', 'Menu Baru Ditambahkan');
+    
+        return redirect('addMenu')->with('successcreate', 'Menu Baru Ditambahkan');
     }
+    
 
     /**
      * Display the specified resource.

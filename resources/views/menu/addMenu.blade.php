@@ -9,123 +9,78 @@
                 </div>
             </div>
 
+
+            {{-- Pesan Alert --}}
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Oops! </strong> Ada beberapa masalah dengan input Anda:
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
+            @if (session('successcreate'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Berhasil!</strong> {{ session('successcreate') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('menuList') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('createMenu') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input type="text">
+                                    <input type="text" name="name">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select class="select">
+                                    <select class="select" name="category">
                                         <option>Choose Category</option>
-                                        <option>Computers</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Sub Category</label>
-                                    <select class="select">
-                                        <option>Choose Sub Category</option>
-                                        <option>Fruits</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Brand</label>
-                                    <select class="select">
-                                        <option>Choose Brand</option>
-                                        <option>Brand</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Unit</label>
-                                    <select class="select">
-                                        <option>Choose Unit</option>
-                                        <option>Unit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>SKU</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Minimum Qty</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Quantity</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Tax</label>
-                                    <select class="select">
-                                        <option>Choose Tax</option>
-                                        <option>2%</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Discount Type</label>
-                                    <select class="select">
-                                        <option>Percentage</option>
-                                        <option>10%</option>
-                                        <option>20%</option>
+                                        <option value="makanan">Food</option>
+                                        <option value="minuman">Drink</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input type="text">
+                                    <input type="number" name="price">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label> Status</label>
-                                    <select class="select">
-                                        <option>Closed</option>
-                                        <option>Open</option>
-                                    </select>
+                                    <label>Stock</label>
+                                    <input type="number" name="stock">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label> Product Image</label>
                                     <div class="image-upload">
-                                        <input type="file">
+                                        <input type="file" name="image" id="fileInput">
                                         <div class="image-uploads">
-                                            <img src="assets/img/icons/upload.svg" alt="img">
-                                            <h4>Drag and drop a file to upload</h4>
+                                            <img src="assets/img/icons/upload.svg" alt="img" id="imagePreview">
+                                            <h4 id="fileName">Drag and drop a file to upload</h4>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="col-lg-12">
                                 <button type="submit" class="btn btn-submit me-2">Submit</button>
                                 <a href="productlist.html" class="btn btn-cancel">Cancel</a>
@@ -137,4 +92,36 @@
 
         </div>
     </div>
+
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            var fileInput = event.target;
+            var file = fileInput.files[0]; // Ambil file pertama yang dipilih
+            
+            if (file) {
+                // Menampilkan nama file pada elemen <h4> dengan id 'fileName'
+                document.getElementById('fileName').textContent = file.name;
+                
+                // Ganti ikon gambar dengan nama file
+                document.getElementById('imagePreview').style.display = 'none'; // Sembunyikan ikon upload
+                
+                // Menampilkan thumbnail gambar (opsional)
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imagePreview = document.createElement('img');
+                    imagePreview.src = e.target.result;
+                    imagePreview.alt = file.name;
+                    imagePreview.style.maxWidth = '100px'; // Anda bisa mengatur ukuran gambar preview sesuai keinginan
+                    document.querySelector('.image-uploads').appendChild(imagePreview);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Jika tidak ada file, tampilkan pesan default
+                document.getElementById('fileName').textContent = 'Drag and drop a file to upload';
+                document.getElementById('imagePreview').style.display = 'block'; // Tampilkan ikon upload kembali
+            }
+        });
+    </script>
+    
 @endsection
