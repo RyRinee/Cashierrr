@@ -29,6 +29,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->file('image'));
         // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
