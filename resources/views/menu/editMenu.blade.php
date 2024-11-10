@@ -9,136 +9,93 @@
                 </div>
             </div>
 
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Oops! </strong> Ada beberapa masalah dengan input Anda:
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if (session('successupdate'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Berhasil!</strong> {{ session('successupdate') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Product Name</label>
-                                <input type="text" value="Macbook pro" />
+                    <form action="/updateMenu/{{ $menu->id }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <input type="text" name="name" value="{{$menu->name}}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select class="select">
-                                    <option>Computers</option>
-                                    <option>Mac</option>
-                                </select>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="select" name="category" value="{{$menu->category}}">
+                                        <option>Choose Category</option>
+                                        <option value="makanan">Food</option>
+                                        <option value="minuman">Drink</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Sub Category</label>
-                                <select class="select">
-                                    <option>None</option>
-                                    <option>option1</option>
-                                </select>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" name="price" value="{{$menu->price}}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Brand</label>
-                                <select class="select">
-                                    <option>None</option>
-                                    <option>option1</option>
-                                </select>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Stock</label>
+                                    <input type="number" name="stock" value="{{$menu->stock}}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Unit</label>
-                                <select class="select">
-                                    <option>Piece</option>
-                                    <option>Kg</option>
-                                </select>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" name="description" value="{{$menu->description}}"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>SKU</label>
-                                <input type="text" value="PT0002" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Minimum Qty</label>
-                                <input type="text" value="5" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <input type="text" value="50" />
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea class="form-control">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Tax</label>
-                                <select class="select">
-                                    <option>Choose Tax</option>
-                                    <option>2%</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Discount Type</label>
-                                <select class="select">
-                                    <option>Percentage</option>
-                                    <option>10%</option>
-                                    <option>20%</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input type="text" value="1500.00" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label> Status</label>
-                                <select class="select">
-                                    <option>Active</option>
-                                    <option>Open</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Form input untuk memilih gambar -->
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Product Image</label>
-                                <div class="image-upload">
-                                    <input type="file" name="image" id="fileInput" />
-                                    <div class="image-uploads">
-                                        <img src="assets/img/icons/upload.svg" alt="img" id="imagePreview" />
-                                        <h4 id="fileName">Drag and drop a file to upload</h4>
+                            <!-- Form input untuk memilih gambar -->
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Product Image</label>
+                                    <div class="image-upload">
+                                        <input type="file" name="image" id="fileInput" value="{{$menu->image}}">
+                                        <div class="image-uploads">
+                                            <img src="assets/img/icons/upload.svg" alt="img" id="imagePreview">
+                                            <h4 id="fileName">Drag and drop a file to upload</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-12">
-                            <div class="form-group" id="productListContainer">
-                                <ul class="row" id="productList">
-                                    <!-- List of uploaded images will appear here -->
-                                </ul>
+                            <div class="col-12 ">
+                                <div class="form-group" id="productListContainer">
+                                    <ul class="row" id="productList">
+                                        <!-- List of uploaded images will appear here -->
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                <a href="productlist.html" class="btn btn-cancel">Cancel</a>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <a href="javascript:void(0);" class="btn btn-submit me-2">Update</a>
-                            <a href="productlist.html" class="btn btn-cancel">Cancel</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

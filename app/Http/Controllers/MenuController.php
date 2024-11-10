@@ -29,7 +29,6 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->file('image'));
         // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -39,14 +38,14 @@ class MenuController extends Controller
             'description' => 'required|string|max:500',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
-    
+
         // Tentukan status berdasarkan stok
         $status = ($validatedData['stock'] > 0) ? 'tersedia' : 'habis';
-    
+
         // Menyiapkan data input untuk disimpan
         $input = $validatedData;
         $input['status'] = $status; // Menetapkan status otomatis
-    
+
         // Menyimpan gambar dengan Storage
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -54,44 +53,67 @@ class MenuController extends Controller
             $image->move(public_path('storage/image'), $image_name);
             $input['image'] = $image_name;
         }
-    
+
         // Menyimpan menu ke dalam database
         Menu::create($input);
-    
-        return redirect('addMenu')->with('successcreate', 'Menu Baru Ditambahkan');
-    }
-    
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Menu $menu)
-    {
-        //
+        return redirect('menuList')->with('successcreate', 'Menu Baru Ditambahkan');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
         $menu = Menu::find($id);
         return view('menu.editMenu', compact('menu'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Menu $menu)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|in:makanan,minuman',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'required|string|max:500',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+        ]);
+
+        // Tentukan status berdasarkan stok
+        $status = ($validatedData['stock'] > 0) ? 'tersedia' : 'habis';
+        $input = $validatedData;
+        $input['status'] = $status;
+
+        // Perbarui gambar jika ada file baru yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($menu->image) {
+                unlink(public_path('storage/image/' . $menu->image));
+            }
+            // Simpan gambar baru
+            $image = $request->file('image');
+            $image_name = time() . '-' . $image->getClientOriginalName();
+            $image->move(public_path('storage/image'), $image_name);
+            $input['image'] = $image_name;
+        }
+
+        // Update data menu di database
+        $menu->update($input);
+
+        return redirect()->route('menuList')->with('successupdate', 'Menu Berhasil Diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Menu $menu)
     {
-        //
+        // Hapus gambar dari direktori jika ada
+        if ($menu->image) {
+            unlink(public_path('storage/image/' . $menu->image));
+        }
+
+        // Hapus menu dari database
+        $menu->delete();
+        return redirect()->route('menuList')->with('successdelete', 'Menu Berhasil Dihapus');
     }
 }

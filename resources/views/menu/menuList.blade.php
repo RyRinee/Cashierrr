@@ -141,8 +141,7 @@
                                         </td>
                                         <td class="productimgname">
                                             <a href="javascript:void(0);" class="product-img">
-                                                <img src="{{ asset('storage/image/' . $menu->image) }}"
-                                                    alt="image">
+                                                <img src="{{ asset('storage/image/' . $menu->image) }}" alt="image">
                                             </a>
                                             <a href="javascript:void(0);">{{ $menu->name }}</a>
                                         </td>
@@ -158,7 +157,15 @@
                                                 <img src="assets/img/icons/edit.svg" alt="img">
                                             </a>
                                             <a class="confirm-text" href="javascript:void(0);">
-                                                <img src="assets/img/icons/delete.svg" alt="img">
+                                                <form action="{{ route('deleteMenu', $menu->id) }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" style="background:none; border:none; padding:0;"
+                                                        onclick="return confirm('Yakin ingin menghapus?')">
+                                                        <img src="assets/img/icons/delete.svg" alt="img">
+                                                    </button>
+                                                </form>
                                             </a>
                                         </td>
                                     </tr>

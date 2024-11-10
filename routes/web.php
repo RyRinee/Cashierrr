@@ -26,7 +26,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/editMenu/{menu}', 'edit')->name('editMenu');
         Route::post('/updateMenu/{menu}', 'update')->name('updateMenu');
 
-        Route::get('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
+        Route::delete('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
     });
     Route::get('/employeeList', function () {
         return view('employee.list');
