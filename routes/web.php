@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
@@ -22,10 +23,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/menuList', 'index')->name('menuList');
         Route::get('/addMenu', 'create')->name('addMenu');
         Route::post('/createMenu', 'store')->name('createMenu');
-
         Route::get('/editMenu/{menu}', 'edit')->name('editMenu');
         Route::post('/updateMenu/{menu}', 'update')->name('updateMenu');
-
         Route::delete('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
     });
     Route::get('/employeeList', function () {
@@ -44,7 +43,10 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employeeList', 'index')->name('employeeList');
         Route::get('/addEmployee', 'create')->name('addEmployee');
-        Route::get('/editEmployee', 'store')->name('editEmployee');
+        Route::post('/createEmployee', 'store')->name('createEmployee');
+        Route::get('/editEmployee/{employee}', 'store')->name('editEmployee');
+        Route::post('/updateEmployee/{employee}', 'update')->name('updateEmployee');
+        Route::delete('/deleteEmployee/{employee}', 'destroy')->name('deleteEmployee');
     });
 });
 

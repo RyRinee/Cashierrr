@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'employee', 'customer'])->default('customer');
-            $table->string('address');
-            $table->string('notelp');
+            $table->string('address')->nullable()->change();
+            $table->string('notelp')->nullable()->change();
+            $table->string('image')->nullable()->change();
             $table->timestamps();
             $table->softDeletes();
         });
