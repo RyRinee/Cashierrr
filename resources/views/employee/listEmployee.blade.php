@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 @section('content')
 
     <div class="page-wrapper">
@@ -9,10 +9,17 @@
                     <h6>Manage your Customers</h6>
                 </div>
                 <div class="page-btn">
-                    <a href="addcustomer.html" class="btn btn-added"><img src="assets/img/icons/plus.svg"
+                    <a href="{{ route('addEmployee') }}" class="btn btn-added"><img src="assets/img/icons/plus.svg"
                             alt="img">Add Customer</a>
                 </div>
             </div>
+
+            @if (session('successdelete'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Berhasil!</strong> {{ session('successdelete') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
             <div class="card">
                 <div class="card-body">
@@ -91,15 +98,15 @@
                                         </label>
                                     </th>
                                     <th>Profile</th>
-                                    <th>Customer</th>
-                                    <th>Phone</th>
-                                    <th>email</th>
+                                    <th>Customer Name</th>
+                                    <th>Email</th>
                                     <th>Address</th>
+                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (employees as $employee)
+                                @foreach ( $employees as $employee)
                                 <tr>
                                     <td>
                                         <label class="checkboxs">
@@ -109,27 +116,25 @@
                                     </td>
                                     <td class="productimgname">
                                         <a href="javascript:void(0);" class="product-img">
-                                            <img src="assets/img/customer/customer1.jpg" alt="product">
+                                            <img src="{{ asset('storage/image/' . $employee->image) }}" alt="image">
                                         </a>
                                     </td>
                                     <td>{{$employee->name}}</td>
-                                    <td>{{$employee->notelp}}</td>
                                     <td>{{$employee->email}}</td>
                                     <td>{{$employee->address}}</td>
+                                    <td>{{$employee->notelp}}</td>
                                     <td>
-                                        <a class="me-3" href="{{route('editEmployee')}}">
+                                        <a class="me-3" href="{{route('editEmployee', $employee->id)}}">
                                             <img src="assets/img/icons/edit.svg" alt="img">
                                         </a>
-                                        <form action="{{ route('deleteEmployee', $employee->id) }}" method="POST"
-                                            style="display:inline;">
+
+                                        <a class="me-3 confirm-text" href="javascript:void(0);" data-id="{{ $employee->id }}" data-type="employee">
+                                            <img src="assets/img/icons/delete.svg" alt="img" />
+                                        </a>
+                                        <form id="delete-form-{{ $employee->id }}" action="{{ route('deleteEmployee', $employee->id) }}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" style="background:none; border:none; padding:0;"
-                                                onclick="return confirm('Yakin ingin menghapus?')">
-                                                <img src="assets/img/icons/delete.svg" alt="img">
-                                            </button>
-                                        </form>
-
+                                        </form>                                        
                                     </td>
                                 </tr>
                                 @endforeach

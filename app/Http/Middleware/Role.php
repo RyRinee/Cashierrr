@@ -18,6 +18,6 @@ class Role
         if($request->user()->role == $role) {
             return $next($request);
         }
-        abort(403, 'Not Found');
+        abort(403, 'Lah ternyata maslaah role');
     }
 }
