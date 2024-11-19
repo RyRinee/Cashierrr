@@ -12,39 +12,14 @@ class TransactionDetailController extends Controller
      */
     public function index()
     {
-        //
+        $details = TransactionDetail::all();
+        return view('transaction.detail', compact('details'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit($id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(TransactionDetail $transactionDetail)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TransactionDetail $transactionDetail)
-    {
-        //
+        $details = TransactionDetail::find($id);
+        return view('transaction.edit', compact('details'));
     }
 
     /**
@@ -52,7 +27,24 @@ class TransactionDetailController extends Controller
      */
     public function update(Request $request, TransactionDetail $transactionDetail)
     {
-        //
+        // Validasi data input
+        $request->validate([
+            'transaction_id' => 'required|exists:transactions,id',
+            'menu_id' => 'required|exists:menus,id',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Update data transaction detail
+        $transactionDetail->update([
+            'transaction_id' => $request->transaction_id,
+            'menu_id' => $request->menu_id,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+            'subtotal' => $request->quantity * $request->price,
+        ]);
+
+        return redirect()->route('transaction.details')->with('success', 'Transaction detail updated successfully');
     }
 
     /**
@@ -60,6 +52,8 @@ class TransactionDetailController extends Controller
      */
     public function destroy(TransactionDetail $transactionDetail)
     {
-        //
+        // Hapus data transaction detail
+        $transactionDetail->delete();
+        return redirect()->route('transaction.details')->with('success', 'Transaction detail deleted successfully');
     }
 }
