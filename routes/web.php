@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\TransactionDetailController;
 use App\Models\Employee;
-
-
+use App\Models\TransactionDetail;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'signinview')->name('login');
@@ -33,6 +33,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/addEmployee', function () {
         return view('employee.addEmployee');
     })->name('addEmployee');
+
+    Route::controller(TransactionDetailController::class)->group(function () {
+        Route::get('/detailTransaction', 'index')->name('detailTransaction');
+        Route::get('/editDetail{transactionDetail}', 'edit')->name('editDetail');
+        Route::get('/destroyDetail{transactionDetail}', 'destroy')->name('destroyDetail');
+    });
 });
 
 
