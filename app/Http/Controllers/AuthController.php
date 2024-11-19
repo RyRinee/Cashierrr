@@ -19,6 +19,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
+        
         if (Auth::attempt($credentials)) {
             $role = Auth::user()->role;
             if($role === 'admin'){

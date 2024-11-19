@@ -22,14 +22,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            
 
-            @if (session('successcreate'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Berhasil!</strong> {{ session('successcreate') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
+            {{-- Form --}}
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('createMenu') }}" method="POST" enctype="multipart/form-data">
@@ -57,7 +52,7 @@
                                     <input type="number" name="price">
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="col-lg-3 col-sm-6 col-12"> 
                                 <div class="form-group">
                                     <label>Stock</label>
                                     <input type="number" name="stock">

@@ -22,17 +22,21 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => 'admin',
         ]);
-        User::create([
-            'name' => 'Employee',
-            'email' => 'employee@example.com',
-            'password' => Hash::make('employee'),
-            'role' => 'employee',
-        ]);
-        User::create([
-            'name' => 'Customer',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('customer'),
-            'role' => 'customer',
-        ]);
+        // User::create([
+        //     'name' => 'Employee',
+        //     'email' => 'employee@example.com',
+        //     'password' => Hash::make('employee'),
+        //     'role' => 'employee',
+        //     'address' => 'Jalan Raya',
+        //     'notelp' => '08123456789',  
+        // ]);
+        // User::create([
+        //     'name' => 'Customer',
+        //     'email' => 'customer@example.com',
+        //     'password' => Hash::make('customer'),
+        //     'role' => 'customer',
+        //     'address' => 'Jalan Raya',
+        //     'notelp' => '08123456789',
+        // ]);
     }
 }

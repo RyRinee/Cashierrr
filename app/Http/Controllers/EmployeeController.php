@@ -29,13 +29,14 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'email' => 'required|email|max:255',
-            'notelp' => 'required|string|max:15',
-            'address' => 'required|string|max:500',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-        ]);
+            'name' => 'required|string|max:255', 
+            'email' => 'required|email|max:255|unique:users,email',  
+            'password' => 'required|string|min:4',  
+            'role' => 'required|string|in:admin,employee,customer',
+            'address' => 'required|string|max:255',
+            'notelp' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',  
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096', 
+        ]);        
 
         // Menyiapkan data input
         $input = $validatedData;
@@ -72,12 +73,13 @@ class EmployeeController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'email' => 'required|email|max:255',
-            'notelp' => 'required|string|max:15',
-            'address' => 'required|string|max:500',
+            'email' => 'required|email|max:255|unique:users,email,' . $employee->id,
+            'password' => 'required|string|min:4', 
+            'role' => 'required|string|in:admin,employee,customer',
+            'address' => 'required|string|max:255',
+            'notelp' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',  
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-        ]);
+        ]);        
 
         // Menyiapkan data input
         $input = $validatedData;

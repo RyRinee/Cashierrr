@@ -156,17 +156,14 @@
                                             <a class="me-3" href="{{ route('editMenu', $menu->id) }}">
                                                 <img src="assets/img/icons/edit.svg" alt="img">
                                             </a>
-                                            <a class="confirm-text" href="javascript:void(0);">
-                                                <form action="{{ route('deleteMenu', $menu->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" style="background:none; border:none; padding:0;"
-                                                        onclick="return confirm('Yakin ingin menghapus?')">
-                                                        <img src="assets/img/icons/delete.svg" alt="img">
-                                                    </button>
-                                                </form>
+
+                                            <a class="me-3 confirm-text" href="javascript:void(0);" data-id="{{ $menu->id }}" data-type="menu">
+                                                <img src="assets/img/icons/delete.svg" alt="img" />
                                             </a>
+                                            <form id="delete-form-{{ $menu->id }}" action="{{ route('deleteMenu', $menu->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>                                           
                                         </td>
                                     </tr>
                                 @endforeach
