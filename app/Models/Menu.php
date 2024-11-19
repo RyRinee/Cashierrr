@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
 
-    protected $fillable = ['name', 'category', 'price', 'stock', 'description', 'image', 'status'];
+    protected $fillable = ['name', 'category', 'price', 'stock', 'image', 'status'];
 
     public function transactionDetails()
     {

@@ -30,9 +30,9 @@
 </head>
 
 <body>
-    <div id="global-loader">
+    {{-- <div id="global-loader">
         <div class="whirly-loader"> </div>
-    </div>
+    </div> --}}
 
     <div class="main-wrapper">
 
@@ -273,6 +273,14 @@
                             <ul>
                                 <li><a href="{{route('employeeList')}}">Employee List</a></li>
                                 <li><a href="{{route('addEmployee')}}">Add Employee </a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="assets/img/icons/sales1.svg" alt="img"><span>
+                                    Sales</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{route('order')}}">Order Menu</a></li>
+                                {{-- <li><a href="{{route('transaction')}}">Transaction </a></li> --}}
                             </ul>
                         </li>
                         <li class="submenu">

@@ -22,7 +22,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            
+
 
             {{-- Form --}}
             <div class="card">
@@ -52,16 +52,10 @@
                                     <input type="number" name="price">
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-6 col-12"> 
+                            <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Stock</label>
                                     <input type="number" name="stock">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control" name="description"></textarea>
                                 </div>
                             </div>
                             <!-- Form input untuk memilih gambar -->

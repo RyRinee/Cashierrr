@@ -35,7 +35,6 @@ class MenuController extends Controller
             'category' => 'required|string|in:makanan,minuman',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'description' => 'required|string|max:500',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
@@ -116,4 +115,11 @@ class MenuController extends Controller
         $menu->delete();
         return redirect()->route('menuList')->with('successdelete', 'Menu Berhasil Dihapus');
     }
+
+    public function show()
+    {
+        $menus = Menu::all();
+        return view('menu.order', compact('menus'));
+    }
+
 }

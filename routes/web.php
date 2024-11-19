@@ -11,7 +11,7 @@ use App\Models\Employee;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'signinview')->name('login');
-    Route::post('/login', 'authenticate')->name('login');
+    Route::post('/login', 'authenticate')->name('loginProses');
 });
 
 
@@ -35,6 +35,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/updateEmployee/{id}', 'update')->name('updateEmployee');
         Route::delete('/deleteEmployee/{id}', 'destroy')->name('deleteEmployee');
     });
+
 });
 
 
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employeeDash', function () {
         return view('employee.dashboard');
     })->name('employeeDash');
+    Route::get('/order', [MenuController::class, 'show'])->name('order');
 });
 
 

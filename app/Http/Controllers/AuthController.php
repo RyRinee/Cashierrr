@@ -30,7 +30,7 @@ class AuthController extends Controller
                 return redirect()->intended('customerDash');
             }
         }else{
-            return redirect('/login')->with('failed', 'Email atau Password Salah');
+            return redirect('/')->with('failed', 'Email atau Password Salah');
         }
     }
 }

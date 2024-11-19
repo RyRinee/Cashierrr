@@ -35,7 +35,7 @@
                             <h3>Sign In</h3>
                             <h4>Please login to your account</h4>
                         </div>
-                        <form action="{{ route('login') }}" method="POST">
+                        <form action="{{ route('loginProses') }}" method="POST">
                             @csrf
                             <div class="form-login">
                                 <label>Email</label>
