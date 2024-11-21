@@ -119,7 +119,7 @@ class MenuController extends Controller
     public function show()
     {
         $menus = Menu::all();
-        return view('menu.order', compact('menus'));
+        return view('sales.order', compact('menus'));
     }
 
 }
