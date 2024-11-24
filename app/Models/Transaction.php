@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    protected $guarded = ['id'];
+    
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
-public function TransactionDetails()
-{
-    return $this->hasMany(TransactionDetail::class);
-}
+    public function TransactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Employee;
 
 
@@ -40,12 +41,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
-    Route::get('/employeeDash', function () {
-        return view('employee.dashboard');
-    })->name('employeeDash');
-    Route::get('/order', [MenuController::class, 'show'])->name('order');
+    Route::get('/order', [TransactionController::class, 'create'])->name('order');
+    Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction');
+    Route::get('/transaction/struk/{id}', [TransactionController::class, 'sturk'])->name('sturk');
 });
-
-
-Route::middleware(['auth', 'role:delivery'])->group(function () {});
-Route::middleware(['auth', 'role:customer'])->group(function () {});

@@ -25,9 +25,7 @@ class AuthController extends Controller
             if($role === 'admin'){
                 return redirect()->intended('adminDash');
             }elseif($role === 'employee'){
-                return redirect()->intended('employeeDash');
-            }elseif($role === 'customer'){
-                return redirect()->intended('customerDash');
+                return redirect()->intended('order');
             }
         }else{
             return redirect('/')->with('failed', 'Email atau Password Salah');

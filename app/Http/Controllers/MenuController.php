@@ -121,5 +121,4 @@ class MenuController extends Controller
         $menus = Menu::all();
         return view('sales.order', compact('menus'));
     }
-
 }

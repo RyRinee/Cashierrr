@@ -246,81 +246,12 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="active">
-                            <a href="index.html"><img src="assets/img/icons/dashboard.svg" alt="img"><span>
-                                    Dashboard</span> </a>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/product.svg" alt="img"><span>
-                                    Product</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="productlist.html">Product List</a></li>
-                                <li><a href="addproduct.html">Add Product</a></li>
-                                <li><a href="categorylist.html">Category List</a></li>
-                                <li><a href="addcategory.html">Add Category</a></li>
-                                <li><a href="subcategorylist.html">Sub Category List</a></li>
-                                <li><a href="subaddcategory.html">Add Sub Category</a></li>
-                                <li><a href="brandlist.html">Brand List</a></li>
-                                <li><a href="addbrand.html">Add Brand</a></li>
-                                <li><a href="importproduct.html">Import Products</a></li>
-                                <li><a href="barcode.html">Print Barcode</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg" alt="img"><span>
-                                    Employee</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="{{route('employeeList')}}">Employee List</a></li>
-                                <li><a href="{{route('addEmployee')}}">Add Employee </a></li>
-                            </ul>
-                        </li>
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="assets/img/icons/sales1.svg" alt="img"><span>
                                     Sales</span> <span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{route('order')}}">Order Menu</a></li>
                                 {{-- <li><a href="{{route('transaction')}}">Transaction </a></li> --}}
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/places.svg" alt="img"><span>
-                                    Places</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="newcountry.html">New Country</a></li>
-                                <li><a href="countrieslist.html">Countries list</a></li>
-                                <li><a href="newstate.html">New State </a></li>
-                                <li><a href="statelist.html">State list</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/product.svg" alt="img"><span>
-                                    Application</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="chat.html">Chat</a></li>
-                                <li><a href="calendar.html">Calendar</a></li>
-                                <li><a href="email.html">Email</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/time.svg" alt="img"><span>
-                                    Report</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="purchaseorderreport.html">Purchase order report</a></li>
-                                <li><a href="inventoryreport.html">Inventory Report</a></li>
-                                <li><a href="salesreport.html">Sales Report</a></li>
-                                <li><a href="invoicereport.html">Invoice Report</a></li>
-                                <li><a href="purchasereport.html">Purchase Report</a></li>
-                                <li><a href="supplierreport.html">Supplier Report</a></li>
-                                <li><a href="customerreport.html">Customer Report</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg" alt="img"><span>
-                                    Users</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="newuser.html">New User </a></li>
-                                <li><a href="userlists.html">Users List</a></li>
                             </ul>
                         </li>
                     </ul>
