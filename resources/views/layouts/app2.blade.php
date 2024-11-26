@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="POS - Bootstrap Admin Template">
     <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern,  html5, responsive">
+        content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Dreams Pos admin template</title>
@@ -17,45 +17,35 @@
 
     <link rel="stylesheet" href="assets/css/animate.css">
 
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
-
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/plugins/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/plugins/owlcarousel/owl.theme.default.min.css">
 
     <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
 
+    <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    {{-- <div id="global-loader">
+    <div id="global-loader">
         <div class="whirly-loader"> </div>
-    </div> --}}
-
-    <div class="main-wrapper">
-
+    </div>
+    <div class="main-wrappers">
         <div class="header">
 
-            <div class="header-left active">
+            <div class="header-left border-0 ">
                 <a href="index.html" class="logo">
                     <img src="assets/img/logo.png" alt="">
                 </a>
                 <a href="index.html" class="logo-small">
                     <img src="assets/img/logo-small.png" alt="">
                 </a>
-                <a id="toggle_btn" href="javascript:void(0);">
-                </a>
             </div>
 
-            <a id="mobile_btn" class="mobile_btn" href="#sidebar">
-                <span class="bar-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </a>
 
             <ul class="nav user-menu">
 
@@ -119,8 +109,8 @@
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">John Doe</span> added
-                                                    new task <span class="noti-title">Patient appointment booking</span>
-                                                </p>
+                                                    new task <span class="noti-title">Patient appointment
+                                                        booking</span></p>
                                                 <p class="noti-time"><span class="notification-time">4 mins ago</span>
                                                 </p>
                                             </div>
@@ -134,9 +124,10 @@
                                                 <img alt="" src="assets/img/profiles/avatar-03.jpg">
                                             </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Tarah Shropshire</span>
-                                                    changed the task name <span class="noti-title">Appointment booking
-                                                        with payment gateway</span></p>
+                                                <p class="noti-details"><span class="noti-title">Tarah
+                                                        Shropshire</span> changed the task name <span
+                                                        class="noti-title">Appointment booking with payment
+                                                        gateway</span></p>
                                                 <p class="noti-time"><span class="notification-time">6 mins ago</span>
                                                 </p>
                                             </div>
@@ -170,8 +161,8 @@
                                                 <p class="noti-details"><span class="noti-title">Rolland Webber</span>
                                                     completed task <span class="noti-title">Patient and Doctor video
                                                         conferencing</span></p>
-                                                <p class="noti-time"><span class="notification-time">12 mins ago</span>
-                                                </p>
+                                                <p class="noti-time"><span class="notification-time">12 mins
+                                                        ago</span></p>
                                             </div>
                                         </div>
                                     </a>
@@ -183,9 +174,9 @@
                                                 <img alt="" src="assets/img/profiles/avatar-13.jpg">
                                             </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span>
-                                                    added new task <span class="noti-title">Private chat module</span>
-                                                </p>
+                                                <p class="noti-details"><span class="noti-title">Bernardo
+                                                        Galaviz</span> added new task <span class="noti-title">Private
+                                                        chat module</span></p>
                                                 <p class="noti-time"><span class="notification-time">2 days ago</span>
                                                 </p>
                                             </div>
@@ -216,10 +207,23 @@
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
-                                Profile</a>
-                            <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
-                                    data-feather="settings"></i>Settings</a>
+                            <a class="dropdown-item" href="profile.html"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-user me-2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg> My Profile</a>
+                            <a class="dropdown-item" href="generalsettings.html"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-settings me-2">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                    </path>
+                                </svg>Settings</a>
                             <hr class="m-0">
                             <a class="dropdown-item logout pb-0" href="signin.html"><img
                                     src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
@@ -240,29 +244,10 @@
             </div>
 
         </div>
-
-
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-inner slimscroll">
-                <div id="sidebar-menu" class="sidebar-menu">
-                    <ul>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/sales1.svg" alt="img"><span>
-                                    Sales</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="{{route('order')}}">Order Menu</a></li>
-                                {{-- <li><a href="{{route('transaction')}}">Transaction </a></li> --}}
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <div>
             @yield('content');
         </div>
     </div>
-
 
     <script src="assets/js/jquery-3.6.0.min.js"></script>
 
@@ -270,19 +255,17 @@
 
     <script src="assets/js/jquery.slimscroll.min.js"></script>
 
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
-    
+    <script src="assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+
     <script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
     <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
-
-    <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="assets/plugins/apexchart/chart-data.js"></script>
 
     <script src="assets/js/script.js"></script>
 </body>
