@@ -32,56 +32,72 @@ class TransactionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'qty' => 'required|array',
-        'qty.*' => 'required|integer|min:1',
-        'payment_amount' => 'required|numeric|min:1',
-        'total_amount' => 'required|numeric|min:1',
-        'cart_items' => 'required|json',
-    ]);
-
-    $input = $request->all();
-    $input['user_id'] = Auth::user()->id;
-    $input['date'] = now()->toDateString();
-
-    // Buat transaksi baru
-    $transaction = new Transaction();
-    $transaction->user_id = $input['user_id'];
-    $transaction->date = $input['date'];
-    $transaction->total_amount = $input['total_amount'];
-    $transaction->save();
-    
-    $cartItems = json_decode($input['cart_items'], true);
-
-    foreach ($input['qty'] as $menuId => $quantity) {
-        $menu = Menu::findOrFail($menuId);
-        $hargaMenu = $menu->price;
-
-        $subtotal = $hargaMenu * $quantity;
-
-        // Simpan detail transaksi
-        TransactionDetail::create([
-            'transaction_id' => $transaction->id,
-            'menu_id' => $menuId,
-            'quantity' => $quantity,
-            'price' => $hargaMenu,
-            'subtotal' => $subtotal,
+    {
+        // Validasi data yang dikirim dari form
+        $request->validate([
+            'payment_method_option' => 'required|string', // Validasi untuk metode pembayaran
+            'cash_amount' => 'required_if:payment_method_option,Cash|numeric|min:1', // Validasi jumlah uang jika metode pembayaran adalah Cash
+            'total_amount' => 'required|numeric|min:1', // Total harus ada dan lebih dari 0
+            'cart_items' => 'required|json', // Validasi item keranjang harus dalam format JSON
         ]);
+    
+        $input = $request->all();
+        $input['user_id'] = Auth::user()->id;
+        $input['date'] = now()->toDateString();
+    
+        // Buat transaksi baru
+        $transaction = new Transaction();
+        $transaction->user_id = $input['user_id'];
+        $transaction->date = $input['date'];
+        $transaction->total_amount = $input['total_amount'];
+        $transaction->payment_method = $input['payment_method_option'];
+    
+        if ($input['payment_method_option'] === 'Cash') {
+            $transaction->cash_amount = $input['cash_amount'];
+        } else {
+            $transaction->cash_amount = 0; // Atur cash_amount ke 0 untuk metode pembayaran selain Cash
+        }
+        
+        $transaction->save();
+    
+        // Decode JSON cart_items ke array
+        $cartItems = json_decode($input['cart_items'], true);
+    
+        // Simpan detail item
+        foreach ($cartItems as $item) {
+            $menu = Menu::where('name', $item['name'])->firstOrFail();
+            $hargaMenu = $menu->price;
+    
+            $subtotal = $hargaMenu * $item['quantity'];
+    
+            // Simpan detail transaksi
+            TransactionDetail::create([
+                'transaction_id' => $transaction->id,
+                'menu_id' => $menu->id,
+                'quantity' => $item['quantity'],
+                'price' => $hargaMenu,
+                'subtotal' => $subtotal,
+            ]);
+        }
+    
+        // Redirect ke halaman struk
+        return redirect()->route('struk', ['id' => $transaction->id, 'payment_amount' => $input['cash_amount'] ?? $input['total_amount']]);
     }
+    
 
-    // Redirect ke halaman struk atau berhasil
-    return redirect(route('struk', ['transaction' => $transaction->id, 'payment_amount' => $input['payment_amount']]));
+
+public function showStruk($id, Request $request)
+{
+    $transaction = Transaction::with('details.menu')->findOrFail($id);
+
+    return view('sales.struk', [
+        'transaction' => $transaction,
+        'payment_amount' => $request->input('payment_amount')
+    ]);
 }
 
+    
 
-    public function struk($id)
-    {
-        $transaction = Transaction::with('user')->find($id);
-        return view('sales.struk', [
-            'transaction' => $transaction
-        ]);
-    }
 
     /**
      * Display the specified resource.

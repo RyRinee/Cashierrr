@@ -296,23 +296,17 @@
 
                                 <!-- Tombol Checkout -->
                                 <div class="modal-footer p-0 mt-3">
-                                    <button type="submit" class="btn btn-success w-100" id="checkoutButton"
-                                        disabled>Checkout</button>
+                                    <button type="submit" class="btn btn-success w-100"
+                                        id="checkoutButton">Checkout</button>
                                 </div>
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- Formulir tersembunyi untuk mengirimkan data keranjang -->
-    <form id="cartForm" action="{{ route('transaction') }}" method="POST" style="display: none;">
-        @csrf
-        <input type="hidden" name="cart_items" id="cartItemsInput">
-    </form>
 
 
     <script>
@@ -320,12 +314,59 @@
         let isModalOpen = false; // Flag untuk mencegah modal terbuka berulang kali
         let isFooterCartShown = false; // Untuk memastikan footer cart hanya muncul sekali
 
-        // Fungsi untuk memuat cart dari localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            loadCartFromLocalStorage();
-        });
+        // Fungsi untuk menyimpan data keranjang ke localStorage
+        function saveCartToLocalStorage() {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        }
 
-        // Tambahkan item ke keranjang
+        // Fungsi untuk memperbarui tampilan keranjang
+        function updateCartDisplay() {
+            const cartItemCount = document.querySelector('.cart-item-count');
+            const cartTotalPrice = document.querySelector('.cart-total-price .price-amount');
+            const footerCart = document.getElementById('footerCart');
+            const cartItemsList = document.getElementById('cartItemsList');
+
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            cartItemsList.innerHTML = ''; // Clear existing items
+
+            cartItems.forEach(item => {
+                totalItems += item.quantity;
+                let price = parseFloat(item.price.replace('Rp ', '').replace(',', '').replace(' ', ''));
+                totalPrice += price * item.quantity;
+
+                // Tambahkan elemen untuk menampilkan item
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'd-flex justify-content-between align-items-center mb-2';
+                itemDiv.innerHTML = `
+        <div>
+            <strong>${item.name}</strong> 
+            <span>(${item.quantity} x ${item.price})</span>
+        </div>
+        <span>Rp ${(price * item.quantity).toLocaleString()}</span>
+        `;
+                cartItemsList.appendChild(itemDiv);
+            });
+
+            cartItemCount.textContent = `${totalItems} items`;
+            cartTotalPrice.textContent = `Rp ${totalPrice.toLocaleString()}`;
+
+            footerCart.style.display = cartItems.length === 0 ? 'none' : 'flex';
+
+            // Simpan data ke localStorage
+            saveCartToLocalStorage();
+        }
+
+        // Fungsi untuk menghitung total harga
+        function calculateTotal() {
+            return cartItems.reduce((total, item) => {
+                let price = parseFloat(item.price.replace('Rp ', '').replace(',', '').replace(' ', ''));
+                return total + price * item.quantity;
+            }, 0);
+        }
+
+        // Fungsi untuk menambahkan item ke keranjang
         function addToCart(itemName, itemPrice, button) {
             const quantityBtns = button.nextElementSibling;
 
@@ -355,65 +396,35 @@
             }
         }
 
-        // Fungsi untuk melanjutkan ke halaman transaksi
         function redirectToTransaction() {
             const cartItemsInput = document.getElementById('cartItemsInput');
             const totalAmountInput = document.getElementById('totalAmountInput');
+            const paymentMethodInput = document.getElementById('paymentMethodInput');
 
-            cartItemsInput.value = JSON.stringify(cartItems); // Mengonversi data keranjang menjadi JSON
-            totalAmountInput.value = calculateTotal(); // Mengonversi total amount menjadi nilai
+            const cartItemsList = document.getElementById('cartItemsList');
+            const items = [];
+
+            // Ambil item dari cartItems dan konversi ke JSON
+            for (let i = 0; i < cartItems.length; i++) {
+                const item = cartItems[i];
+                items.push({
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                });
+            }
+
+            cartItemsInput.value = JSON.stringify(items);
+            totalAmountInput.value = calculateTotal();
+            paymentMethodInput.value = document.querySelector('input[name="payment_method_option"]:checked').value;
 
             document.getElementById('cartForm').submit(); // Mengirimkan formulir
         }
 
-        // Fungsi untuk memperbarui tampilan keranjang
-        function updateCartDisplay() {
-            const cartItemCount = document.querySelector('.cart-item-count');
-            const cartTotalPrice = document.querySelector('.cart-total-price .price-amount');
-            const footerCart = document.getElementById('footerCart');
-            const cartItemsList = document.getElementById('cartItemsList');
 
-            let totalItems = 0;
-            let totalPrice = 0;
 
-            cartItemsList.innerHTML = ''; // Clear existing items
 
-            cartItems.forEach(item => {
-                totalItems += item.quantity;
-                let price = parseFloat(item.price.replace('Rp ', '').replace(',', '').replace(' ', ''));
-                totalPrice += price * item.quantity;
-
-                // Tambahkan elemen untuk menampilkan item
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'd-flex justify-content-between align-items-center mb-2';
-                itemDiv.innerHTML = `
-                <div>
-                    <strong>${item.name}</strong> 
-                    <span>(${item.quantity} x ${item.price})</span>
-                </div>
-                <span>Rp ${(price * item.quantity).toLocaleString()}</span>
-            `;
-                cartItemsList.appendChild(itemDiv);
-            });
-
-            cartItemCount.textContent = `${totalItems} items`;
-            cartTotalPrice.textContent = `Rp ${totalPrice.toLocaleString()}`;
-
-            footerCart.style.display = cartItems.length === 0 ? 'none' : 'flex';
-
-            // Simpan data ke localStorage
-            saveCartToLocalStorage();
-        }
-
-        // Fungsi untuk menghitung total harga
-        function calculateTotal() {
-            return cartItems.reduce((total, item) => {
-                let price = parseFloat(item.price.replace('Rp ', '').replace(',', '').replace(' ', ''));
-                return total + price * item.quantity;
-            }, 0);
-        }
-
-        // Tampilkan modal checkout
+        // Fungsi untuk menampilkan modal checkout
         function openCheckoutModal(ignoreFlag = false) {
             if (!ignoreFlag && isModalOpen) return; // Cegah modal dibuka berulang kali dari tombol "Pesan"
 
@@ -431,25 +442,24 @@
             openCheckoutModal(true); // Abaikan flag isModalOpen
         }
 
-        // Sembunyikan modal checkout
+        // Fungsi untuk menyembunyikan modal checkout
         function closeCheckoutModal() {
             $('#checkoutModal').modal('hide');
             isModalOpen = false; // Reset flag ketika modal ditutup
         }
 
-        // Tambah jumlah item
+        // Fungsi untuk menambah jumlah item
         function increaseQuantity(button) {
             const quantitySpan = button.previousElementSibling;
             let quantity = parseInt(quantitySpan.textContent);
             quantity++;
             quantitySpan.textContent = quantity;
 
-            // Perbarui kuantitas item di keranjang
+            // Perbarui kuantitas item di keranjang tanpa membuka modal
             updateItemQuantity(button, quantity);
-            openCheckoutModal(); // Memastikan modal diperbarui
         }
 
-        // Kurangi jumlah item
+        // Fungsi untuk mengurangi jumlah item
         function decreaseQuantity(button) {
             const quantitySpan = button.nextElementSibling;
             let quantity = parseInt(quantitySpan.textContent);
@@ -465,15 +475,24 @@
                 quantityBtns.style.display = 'none';
                 orderButton.style.display = 'inline-block';
 
-                const itemName = button.closest('.menu-box').querySelector('.item-name').textContent;
+                const itemName = button.closest('.card-body').querySelector('.card-title').textContent;
                 removeFromCart(itemName);
             }
-            openCheckoutModal(); // Memastikan modal diperbarui
         }
 
-        // Perbarui jumlah item di keranjang
+        // Fungsi untuk memperbarui jumlah item di keranjang
         function updateItemQuantity(button, quantity) {
-            const itemName = button.closest('.menu-box').querySelector('.item-name').textContent;
+            const cardBody = button.closest('.card-body');
+            if (!cardBody) {
+                console.error("Card body not found");
+                return;
+            }
+            const itemNameElem = cardBody.querySelector('.card-title');
+            if (!itemNameElem) {
+                console.error("Item name not found");
+                return;
+            }
+            const itemName = itemNameElem.textContent;
             const itemIndex = cartItems.findIndex(item => item.name === itemName);
 
             if (itemIndex !== -1) {
@@ -483,15 +502,10 @@
             updateCartDisplay();
         }
 
-        // Hapus item dari keranjang
+        // Fungsi untuk menghapus item dari keranjang
         function removeFromCart(itemName) {
             cartItems = cartItems.filter(item => item.name !== itemName);
             updateCartDisplay();
-        }
-
-        // Fungsi menyimpan data keranjang ke localStorage
-        function saveCartToLocalStorage() {
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
         }
 
         // Fungsi untuk menampilkan dan mengelola metode pembayaran QRIS
@@ -530,5 +544,11 @@
                 checkoutButton.disabled = false;
             }
         }
+
+        // Memanggil fungsi redirectToTransaction saat tombol checkout ditekan
+        document.getElementById('checkoutButton').addEventListener('click', (event) => {
+            event.preventDefault();
+            redirectToTransaction();
+        }); 
     </script>
 @endsection
