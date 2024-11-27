@@ -48,6 +48,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/order', [TransactionController::class, 'create'])->name('order');
+    Route::get('/ordertest', function () {
+        return view('sales.transaction');
+    })->name('order');
     Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction');
     Route::get('/transaction/struk/{id}', [TransactionController::class, 'sturk'])->name('sturk');
 });
