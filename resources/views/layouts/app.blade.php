@@ -119,7 +119,8 @@
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">John Doe</span> added
-                                                    new task <span class="noti-title">Patient appointment booking</span>
+                                                    new task <span class="noti-title">Patient appointment
+                                                        booking</span>
                                                 </p>
                                                 <p class="noti-time"><span class="notification-time">4 mins ago</span>
                                                 </p>
@@ -134,7 +135,8 @@
                                                 <img alt="" src="assets/img/profiles/avatar-03.jpg">
                                             </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Tarah Shropshire</span>
+                                                <p class="noti-details"><span class="noti-title">Tarah
+                                                        Shropshire</span>
                                                     changed the task name <span class="noti-title">Appointment booking
                                                         with payment gateway</span></p>
                                                 <p class="noti-time"><span class="notification-time">6 mins ago</span>
@@ -170,7 +172,8 @@
                                                 <p class="noti-details"><span class="noti-title">Rolland Webber</span>
                                                     completed task <span class="noti-title">Patient and Doctor video
                                                         conferencing</span></p>
-                                                <p class="noti-time"><span class="notification-time">12 mins ago</span>
+                                                <p class="noti-time"><span class="notification-time">12 mins
+                                                        ago</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -183,7 +186,8 @@
                                                 <img alt="" src="assets/img/profiles/avatar-13.jpg">
                                             </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span>
+                                                <p class="noti-details"><span class="noti-title">Bernardo
+                                                        Galaviz</span>
                                                     added new task <span class="noti-title">Private chat module</span>
                                                 </p>
                                                 <p class="noti-time"><span class="notification-time">2 days ago</span>
@@ -216,12 +220,13 @@
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
+                            <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i>
+                                My
                                 Profile</a>
                             <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
                                     data-feather="settings"></i>Settings</a>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="{{ route('login')}}"><img
+                            <a class="dropdown-item logout pb-0" href="{{ route('login') }}"><img
                                     src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
                         </div>
                     </div>
@@ -251,7 +256,8 @@
                                     Dashboard</span> </a>
                         </li>
                         <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/product.svg" alt="img"><span>
+                            <a href="javascript:void(0);"><img src="assets/img/icons/product.svg"
+                                    alt="img"><span>
                                     Menu</span> <span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{ route('menuList') }}">Menu List</a></li>
@@ -260,11 +266,20 @@
                         </li>
 
                         <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg" alt="img"><span>
-                                    Employee</span> <span class="menu-arrow"></span></a>
+                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg"
+                                    alt="img">
+                                    <span>Employee</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{route('employeeList')}}">Employee List</a></li>
-                                <li><a href="{{route('addEmployee')}}">Add Employee </a></li>
+                                <li><a href="{{ route('employeeList') }}">Employee List</a></li>
+                                <li><a href="{{ route('addEmployee') }}">Add Employee </a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg"
+                                    alt="img">
+                                    <span>Transactions</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{ route('transactionDetails') }}"> Transaction Details </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -292,7 +307,7 @@
 
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-    
+
     <script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
     <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
 

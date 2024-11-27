@@ -16,7 +16,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        return view('sales.transaction');
     }
 
     /**
@@ -33,8 +33,6 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
 {
-    dd($request->all());
-    // Validasi input
     $request->validate([
         'qty' => 'required|array',
         'qty.*' => 'required|integer|min:1',

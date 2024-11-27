@@ -6,9 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 use App\Models\Employee;
-
-
+use App\Models\TransactionDetail;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'signinview')->name('login');
@@ -35,6 +35,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/editEmployee/{id}', 'edit')->name('editEmployee');
         Route::post('/updateEmployee/{id}', 'update')->name('updateEmployee');
         Route::delete('/deleteEmployee/{id}', 'destroy')->name('deleteEmployee');
+    });
+    Route::controller(TransactionDetailController::class)->group(function () {
+        Route::get('/transactionDetails', 'index')->name('transactionDetails');
+        Route::get('/transactionEdit/{id}', 'edit')->name('transactionEdit');
+        Route::post('/transactionUpdate/{id}', 'update')->name('transactionUpdate');
+        Route::delete('/deleteTransactions/{id}', 'destroy')->name('deleteTransactions');
     });
 
 });

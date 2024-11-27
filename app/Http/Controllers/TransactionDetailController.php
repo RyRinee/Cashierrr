@@ -13,13 +13,13 @@ class TransactionDetailController extends Controller
     public function index()
     {
         $details = TransactionDetail::all();
-        return view('transaction.detail', compact('details'));
+        return view('transactions.details', compact('details'));
     }
 
     public function edit($id)
     {
         $details = TransactionDetail::find($id);
-        return view('transaction.edit', compact('details'));
+        return view('transactions.edit', compact('details'));
     }
 
     /**
@@ -54,6 +54,6 @@ class TransactionDetailController extends Controller
     {
         // Hapus data transaction detail
         $transactionDetail->delete();
-        return redirect()->route('transaction.details')->with('success', 'Transaction detail deleted successfully');
+        return redirect()->route('transactions.details')->with('success', 'Transaction detail deleted successfully');
     }
 }
