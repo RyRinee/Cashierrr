@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TransactionController;
@@ -17,9 +18,11 @@ Route::controller(AuthController::class)->group(function () {
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/adminDash', function () {
-        return view('dashboard.admin');
-    })->name('adminDash');
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/adminDash', 'index')->name('adminDash');
+
+});
+
     Route::controller(MenuController::class)->group(function () {
         Route::get('/menuList', 'index')->name('menuList');
         Route::get('/addMenu', 'create')->name('addMenu');
