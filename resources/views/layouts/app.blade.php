@@ -11,28 +11,24 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Dreams Pos admin template</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/favicon.jpg')}}">
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
 
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap4.min.css')}}">
 
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome/css/fontawesome.min.css')}}">
 
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome/css/all.min.css')}}">
 
-    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 
-
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 </head>
 
 <body>
-    {{-- <div id="global-loader">
-        <div class="whirly-loader"> </div>
-    </div> --}}
 
     <div class="main-wrapper">
 
@@ -40,10 +36,10 @@
 
             <div class="header-left active">
                 <a href="index.html" class="logo">
-                    <img src="assets/img/logo.png" alt="">
+                    <img src="{{asset('assets/img/logo.png')}}" alt="">
                 </a>
                 <a href="index.html" class="logo-small">
-                    <img src="assets/img/logo-small.png" alt="">
+                    <img src="{{asset('assets/img/logo-small.png')}}" alt="">
                 </a>
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
@@ -68,23 +64,23 @@
                             <div class="searchinputs">
                                 <input type="text" placeholder="Search Here ...">
                                 <div class="search-addon">
-                                    <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+                                    <span><img src="{{asset('assets/img/icons/closes.svg')}}" alt="img"></span>
                                 </div>
                             </div>
-                            <a class="btn" id="searchdiv"><img src="assets/img/icons/search.svg" alt="img"></a>
+                            <a class="btn" id="searchdiv"><img src="{{asset('assets/img/icons/search.svg')}}" alt="img"></a>
                         </form>
                     </div>
                 </li>
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <span class="user-img"><img src="assets/img/profiles/avator1.jpg" alt="">
+                        <span class="user-img"><img src="{{asset('assets/img/profiles/avator1.jpg')}}" alt="">
                             <span class="status online"></span></span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-                                <span class="user-img"><img src="assets/img/profiles/avator1.jpg" alt="">
+                                <span class="user-img"><img src="{{asset('assets/img/profiles/avator1.jpg')}}" alt="">
                                     <span class="status online"></span></span>
                                 <div class="profilesets">
                                     <h6>John Doe</h6>
@@ -99,7 +95,7 @@
                                     data-feather="settings"></i>Settings</a>
                             <hr class="m-0">
                             <a class="dropdown-item logout pb-0" href="{{ route('login') }}"><img
-                                    src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
+                                    src="{{asset('assets/img/icons/log-out')}}.svg" class="me-2" alt="img">Logout</a>
                         </div>
                     </div>
                 </li>
@@ -124,11 +120,11 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="active">
-                            <a href="{{route('adminDash')}}"><img src="assets/img/icons/dashboard.svg" alt="img"><span>
+                            <a href="{{route('adminDash')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
                                     Dashboard</span> </a>
                         </li>
                         <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/product.svg"
+                            <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}"
                                     alt="img"><span>
                                     Menu</span> <span class="menu-arrow"></span></a>
                             <ul>
@@ -138,7 +134,7 @@
                         </li>
 
                         <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg"
+                            <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/users1.svg')}}"
                                     alt="img">
                                     <span>Employee</span> <span class="menu-arrow"></span></a>
                             <ul>
@@ -147,7 +143,7 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg"
+                            <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/users1.svg')}}"
                                     alt="img">
                                     <span>Transactions</span> <span class="menu-arrow"></span></a>
                             <ul>
@@ -164,29 +160,29 @@
     </div>
 
 
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
 
-    <script src="assets/js/feather.min.js"></script>
+    <script src="{{asset('assets/js/feather.min.js')}}"></script>
 
-    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="{{asset('assets/js/jquery.slimscroll.min.js')}}"></script>
 
-    <script src="assets/js/jquery.dataTables.min.js"></script>
-    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
 
-    <script src="assets/plugins/select2/js/select2.min.js"></script>
+    <script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 
-    <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{asset('assets/js/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
 
-    <script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-    <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
+    <script src="{{asset('assets/plugins/sweetalert/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/sweetalert/sweetalerts.min.js')}}"></script>
 
-    <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="assets/plugins/apexchart/chart-data.js"></script>
+    <script src="{{asset('assets/plugins/apexchart/apexcharts.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/apexchart/chart-data.js')}}"></script>
 
-    <script src="assets/js/script.js"></script>
+    <script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 
 </html>

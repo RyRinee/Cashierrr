@@ -1,8 +1,5 @@
 @extends('layouts.app')
-@section('content')
-    
-
-
+@section('content')    
 <div class="main-wrapper">
     <div class="page-wrapper">
         <div class="content">
@@ -85,7 +82,7 @@
                                     <div class="image-upload">
                                         <input type="file" id="fileInput" name="image">
                                         <div class="image-uploads">
-                                            <img src="assets/img/icons/upload.svg" alt="img">
+                                            <img src="{{asset('assets/img/icons/upload.svg')}}" alt="img">
                                             <h4>Drag and drop a file to upload</h4>
                                         </div>
                                     </div>

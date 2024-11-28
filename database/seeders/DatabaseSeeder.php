@@ -17,26 +17,69 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'name' => 'Petit',
+            'email' => 'petitmaharaya@gmail.com',
             'password' => Hash::make('admin'),
             'role' => 'admin',
+            'address' => 'Soekorno',
+            'notelp' => '082141793277',
+            'image' => 'Admin1.png',
         ]);
         User::create([
-            'name' => 'Employee',
-            'email' => 'employee@example.com',
+            'name' => 'Ryan',
+            'email' => 'ryanputra@gmail.com',
+            'password' => Hash::make('admin'),
+            'role' => 'admin',
+            'address' => 'Semboro-Babatan',
+            'notelp' => '085823623958',
+            'image' => 'Admin1.png',
+        ]);
+
+
+        User::create([
+            'name' => 'Zidan Ganteng',
+            'email' => 'zidankuat@gmail.com',
             'password' => Hash::make('employee'),
             'role' => 'employee',
-            'address' => 'Jalan Raya',
-            'notelp' => '08123456789',  
+            'address' => 'Semboro-Babatan',
+            'notelp' => '089505365581',
+            'image' => 'user2.jpg',  
         ]);
-        // User::create([
-        //     'name' => 'Customer',
-        //     'email' => 'customer@example.com',
-        //     'password' => Hash::make('customer'),
-        //     'role' => 'customer',
-        //     'address' => 'Jalan Raya',
-        //     'notelp' => '08123456789',
-        // ]);
+        User::create([
+            'name' => 'Wahyu',
+            'email' => 'Wahyulol@gmail.com',
+            'password' => Hash::make('employee'),
+            'role' => 'employee',
+            'address' => 'Umbulrejo',
+            'notelp' => '0895366219365',
+            'image' => 'user2.jpg',  
+        ]);
+        User::create([
+            'name' => 'Feril',
+            'email' => 'ferilrehan@gmail.com',
+            'password' => Hash::make('employee'),
+            'role' => 'employee',
+            'address' => 'Semboro Kulon',
+            'notelp' => '081239115765',
+            'image' => 'user2.jpg',  
+        ]);
+        User::create([
+            'name' => 'Radit',
+            'email' => 'raditbejedit@gmail.com',
+            'password' => Hash::make('employee'),
+            'role' => 'employee',
+            'address' => 'Umbulsari Bengkel',
+            'notelp' => '085333830729',
+            'image' => 'user2.jpg',  
+        ]);
+        User::create([
+            'name' => 'Satrio',
+            'email' => 'satriomahatir@gmail.com',
+            'password' => Hash::make('employee'),
+            'role' => 'employee',
+            'address' => 'Semboro Tengah',
+            'notelp' => '085954995590',
+            'image' => 'user2.jpg',  
+        ]);
     }
 }
