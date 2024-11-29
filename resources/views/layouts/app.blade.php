@@ -119,7 +119,7 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="active">
+                        <li class="{{ Request::routeIs('adminDash') ? 'active' : '' }}">
                             <a href="{{route('adminDash')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
                                     Dashboard</span> </a>
                         </li>
@@ -128,8 +128,8 @@
                                     alt="img"><span>
                                     Menu</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{ route('menuList') }}">Menu List</a></li>
-                                <li><a href="{{ route('addMenu') }}">Add Menu </a></li>
+                                <li><a href="{{ route('menuList') }}" class="{{ Request::routeIs('menuList') ? 'active' : '' }}">Menu List</a></li>
+                                <li><a href="{{ route('addMenu') }}" class="{{ Request::routeIs('addMenu') ? 'active' : '' }}">Add Menu </a></li>
                             </ul>
                         </li>
 
@@ -138,8 +138,8 @@
                                     alt="img">
                                     <span>Employee</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{ route('employeeList') }}">Employee List</a></li>
-                                <li><a href="{{ route('addEmployee') }}">Add Employee </a></li>
+                                <li><a href="{{ route('employeeList') }}" class="{{ Request::routeIs('employeeList') ? 'active' : '' }}">Employee List</a></li>
+                                <li><a href="{{ route('addEmployee') }}" class="{{ Request::routeIs('addEmployee') ? 'active' : '' }}">Add Employee </a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -147,7 +147,7 @@
                                     alt="img">
                                     <span>Transactions</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="{{ route('transactionDetails') }}"> Transaction Details </a></li>
+                                <li><a href="{{ route('transactionDetails') }}" class="{{ Request::routeIs('transactionDetails') ? 'active' : '' }}"> Transaction Details </a></li>
                             </ul>
                         </li>
                     </ul>

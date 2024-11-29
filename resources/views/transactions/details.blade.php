@@ -6,12 +6,8 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Sales List</h4>
-                    <h6>Manage your sales</h6>
-                </div>
-                <div class="page-btn">
-                    <a href="add-sales.html" class="btn btn-added"><img src="assets/img/icons/plus.svg" alt="img"
-                            class="me-1">Add Sales</a>
+                    <h4>Transaction List</h4>
+                    <h6>Manage your transaction</h6>
                 </div>
             </div>
 
@@ -19,12 +15,6 @@
                 <div class="card-body">
                     <div class="table-top">
                         <div class="search-set">
-                            <div class="search-path">
-                                <a class="btn btn-filter" id="filter_search">
-                                    <img src="assets/img/icons/filter.svg" alt="img">
-                                    <span><img src="assets/img/icons/closes.svg" alt="img"></span>
-                                </a>
-                            </div>
                             <div class="search-input">
                                 <a class="btn btn-searchset"><img src="assets/img/icons/search-white.svg"
                                         alt="img"></a>
@@ -48,36 +38,7 @@
                         </div>
                     </div>
 
-                    <div class="card" id="filter_inputs">
-                        <div class="card-body pb-0">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter Reference No">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <select class="select">
-                                            <option>Completed</option>
-                                            <option>Paid</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <a class="btn btn-filters ms-auto"><img
-                                                src="assets/img/icons/search-whites.svg" alt="img"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="table-responsive">
                         <table class="table  datanew">
@@ -90,18 +51,16 @@
                                         </label>
                                     </th>
                                     <th>Date</th>
-                                    <th>Customer Name</th>
                                     <th>Reference</th>
                                     <th>Status</th>
                                     <th>Payment</th>
                                     <th>Total</th>
-                                    <th>Paid</th>
-                                    <th>Due</th>
                                     <th>Biller</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($transactions as $transaction)    
                                 <tr>
                                     <td>
                                         <label class="checkboxs">
@@ -109,15 +68,12 @@
                                             <span class="checkmarks"></span>
                                         </label>
                                     </td>
-                                    <td>walk-in-customer</td>
-                                    <td>19 Nov 2022</td>
-                                    <td>SL0101</td>
+                                    <td>{{ $transaction->date }}</td>
+                                    <td>{{ $transaction->id }}</td>
                                     <td><span class="badges bg-lightgreen">Completed</span></td>
                                     <td><span class="badges bg-lightgreen">Paid</span></td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td class="text-red">100.00</td>
-                                    <td>Admin</td>
+                                    <td>{{ $transaction->total_amount }}</td>
+                                    <td>{{ $transaction->user->name }}</td>
                                     <td class="text-center">
                                         <a class="action-set" href="javascript:void(0);" data-bs-toggle="dropdown"
                                             aria-expanded="true">
@@ -136,7 +92,7 @@
                                             </li>
                                             <li>
                                                 <a href="javascript:void(0);" class="dropdown-item"
-                                                    data-bs-toggle="modal" data-bs-target="#showpayment"><img
+                                                    data-bs-toggle="modal" data-bs-target="#showpayment-{{ $transaction->id }}"><img
                                                         src="assets/img/icons/dollar-square.svg" class="me-2"
                                                         alt="img">Show Payments</a>
                                             </li>
@@ -160,6 +116,7 @@
                                         </ul>
                                     </td>
                                 </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -171,53 +128,60 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="showpayment" tabindex="-1" aria-labelledby="showpayment" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Show Payments</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Reference</th>
-                                <th>Amount </th>
-                                <th>Paid By </th>
-                                <th>Paid By </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bor-b1">
-                                <td>2022-03-07 </td>
-                                <td>INV/SL0101</td>
-                                <td>$ 0.00 </td>
-                                <td>Cash</td>
-                                <td>
-                                    <a class="me-2" href="javascript:void(0);">
-                                        <img src="assets/img/icons/printer.svg" alt="img">
-                                    </a>
-                                    <a class="me-2" href="javascript:void(0);" data-bs-target="#editpayment"
-                                        data-bs-toggle="modal" data-bs-dismiss="modal">
-                                        <img src="assets/img/icons/edit.svg" alt="img">
-                                    </a>
-                                    <a class="me-2 confirm-text" href="javascript:void(0);">
-                                        <img src="assets/img/icons/delete.svg" alt="img">
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+@foreach ($transactions as $transaction)  
+    <div class="modal fade" id="showpayment-{{ $transaction->id }}" tabindex="-1" aria-labelledby="showpayment" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Show Payments</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Id Transaction</th>
+                                    <th>Menu Name</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+                                    <th>Paid By </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($transaction->details as $item)         
+                                    <tr class="bor-b1">
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->transaction_id }}</td>
+                                        <td>{{ $item->menu->name }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->price }}</td>
+                                        <td>{{ $item->subtotal }}</td>
+                                        <td>
+                                            <a class="me-2" href="javascript:void(0);">
+                                                <img src="assets/img/icons/printer.svg" alt="img">
+                                            </a>
+                                            <a class="me-2" href="javascript:void(0);" data-bs-target="#editpayment"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                <img src="assets/img/icons/edit.svg" alt="img">
+                                            </a>
+                                            <a class="me-2 confirm-text" href="javascript:void(0);">
+                                                <img src="assets/img/icons/delete.svg" alt="img">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach
 
 
 <div class="modal fade" id="createpayment" tabindex="-1" aria-labelledby="createpayment" aria-hidden="true">

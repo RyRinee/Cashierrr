@@ -11,7 +11,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = User::all(); // Mengambil semua data karyawan
+        $employees = User::where('role', 'employee')->get();
         return view('employee.listEmployee', compact('employees'));
     }
 

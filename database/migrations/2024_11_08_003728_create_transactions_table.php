@@ -17,8 +17,6 @@ return new class extends Migration
             $table->date('date');
             $table->decimal('total_amount', 15, 2);
             $table->string('payment_method'); // Menambahkan kolom payment_method
-            $table->decimal('cash_amount', 15, 2)->nullable(); // Menambahkan kolom cash_amount jika diperlukan
-            $table->string('status')->nullable(); // Tambahkan kolom status
             $table->timestamps();
         });
         

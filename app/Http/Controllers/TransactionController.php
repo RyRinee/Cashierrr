@@ -19,6 +19,11 @@ class TransactionController extends Controller
         return view('sales.transaction');
     }
 
+    public function transactions () {
+        $transactions = Transaction::with('details', 'user', 'menu')->get();
+        return view('transactions.details', compact('transactions'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -86,15 +91,15 @@ class TransactionController extends Controller
     
 
 
-public function showStruk($id, Request $request)
-{
-    $transaction = Transaction::with('details.menu')->findOrFail($id);
+    public function showStruk($id, Request $request)
+    {
+        $transaction = Transaction::with('details.menu')->findOrFail($id);
 
-    return view('sales.struk', [
-        'transaction' => $transaction,
-        'payment_amount' => $request->input('payment_amount')
-    ]);
-}
+        return view('sales.struk', [
+            'transaction' => $transaction,
+            'payment_amount' => $request->input('payment_amount')
+        ]);
+    }
 
     
 
@@ -102,7 +107,7 @@ public function showStruk($id, Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(Transaction $transaction)
+    public function show(Transaction $transactions)
     {
         //
     }

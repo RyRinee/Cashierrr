@@ -39,8 +39,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/updateEmployee/{id}', 'update')->name('updateEmployee');
         Route::delete('/deleteEmployee/{id}', 'destroy')->name('deleteEmployee');
     });
-    Route::controller(TransactionDetailController::class)->group(function () {
-        Route::get('/transactionDetails', 'index')->name('transactionDetails');
+    Route::controller(TransactionController::class)->group(function () {
+        Route::get('/transactionDetails', 'transactions')->name('transactionDetails');
         Route::get('/transactionEdit/{id}', 'edit')->name('transactionEdit');
         Route::post('/transactionUpdate/{id}', 'update')->name('transactionUpdate');
         Route::delete('/deleteTransactions/{id}', 'destroy')->name('deleteTransactions');

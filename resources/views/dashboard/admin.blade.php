@@ -33,7 +33,7 @@
                     </div>
                     <div class="dash-imgs">
                         <i data-feather="file-text"></i>
-                   </div>
+                    </div>
                 </div>
             </div>
 

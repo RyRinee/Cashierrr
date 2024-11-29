@@ -203,7 +203,7 @@
             <div class="row">
                 @foreach ($menus as $menu)
                     <div class="col-lg-3 col-sm-6 col-12">
-                        <div class="card" style="width: 16rem; font-size: 0.9rem;"">
+                        <div class="card" style="width: 16rem; font-size: 0.9rem;">
                             <img src="{{ asset('storage/image/' . $menu->image) }}" class="card-img-top"
                                 alt="{{ $menu->name }}">
                             <div class="card-body">
@@ -279,7 +279,7 @@
                                 <!-- Input untuk jumlah yang dibayar -->
                                 <div id="cashAmountSection" class="form-group mt-3">
                                     <label for="cashAmount">Jumlah yang Dibayar:</label>
-                                    <input type="number" class="form-control" id="cashAmount" name="cash_amount"
+                                    <input type="number" class="form-control" id="cashAmount"
                                         placeholder="Masukkan jumlah uang yang dibayar" oninput="validatePayment()">
                                     <small id="error-message" style="color: red; display: none;">Jumlah uang yang dimasukkan
                                         kurang dari total yang harus dibayar.</small>
@@ -365,6 +365,8 @@
                 return total + price * item.quantity;
             }, 0);
         }
+
+        console.log("Script loaded successfully");
 
         // Fungsi untuk menambahkan item ke keranjang
         function addToCart(itemName, itemPrice, button) {
