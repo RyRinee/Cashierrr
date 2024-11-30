@@ -28,7 +28,7 @@
             <div class="col-lg-4 col-sm-6 col-12 d-flex">
                 <div class="dash-count das2">
                     <div class="dash-counts">
-                        {{-- <h4>{{ $transactionCount }}</h4> --}}
+                        <h4>{{ $transactionCount }}</h4>
                         <h5>Transaksi Masuk</h5>
                     </div>
                     <div class="dash-imgs">

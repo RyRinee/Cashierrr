@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('total_amount', 15, 2);
             $table->decimal('cash_amount', 15, 2);
             $table->string('payment_method'); // Menambahkan kolom payment_method
+            $table->string('status')->nulable();    
             $table->timestamps();
         });
         

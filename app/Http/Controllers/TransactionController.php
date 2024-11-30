@@ -40,55 +40,65 @@ class TransactionController extends Controller
     {
         // Validasi data yang dikirim dari form
         $request->validate([
-            'payment_method_option' => 'required|string', // Validasi untuk metode pembayaran
-            'cash_amount' => 'required_if:payment_method_option,Cash|numeric|min:1', // Validasi jumlah uang jika metode pembayaran adalah Cash
-            'total_amount' => 'required|numeric|min:1', // Total harus ada dan lebih dari 0
-            'cart_items' => 'required|json', // Validasi item keranjang harus dalam format JSON
+            'payment_method_option' => 'required|string',
+            'cash_amount' => 'required_if:payment_method_option,Cash|numeric|min:1',
+            'total_amount' => 'required|numeric|min:1',
+            'cart_items' => 'required|json',
         ]);
-    
+
         $input = $request->all();
         $input['user_id'] = Auth::user()->id;
         $input['date'] = now()->toDateString();
-    
+        $input['status'] = 'masuk';
+
         // Buat transaksi baru
         $transaction = new Transaction();
         $transaction->user_id = $input['user_id'];
         $transaction->date = $input['date'];
         $transaction->total_amount = $input['total_amount'];
         $transaction->payment_method = $input['payment_method_option'];
-    
+        $transaction->status = $input['status'];
+
         if ($input['payment_method_option'] === 'Cash') {
             $transaction->cash_amount = $input['cash_amount'];
         } else {
-            $transaction->cash_amount = 0; // Atur cash_amount ke 0 untuk metode pembayaran selain Cash
+            $transaction->cash_amount = 0;
         }
-        
+
         $transaction->save();
-    
+
         // Decode JSON cart_items ke array
         $cartItems = json_decode($input['cart_items'], true);
-    
-        // Simpan detail item
+
         foreach ($cartItems as $item) {
-            $menu = Menu::where('name', $item['name'])->firstOrFail();
-            $hargaMenu = $menu->price;
-    
+            $product = Menu::where('name', $item['name'])->firstOrFail(); // Ambil produk
+            $hargaMenu = $product->price;
             $subtotal = $hargaMenu * $item['quantity'];
-    
+
             // Simpan detail transaksi
             TransactionDetail::create([
                 'transaction_id' => $transaction->id,
-                'menu_id' => $menu->id,
+                'menu_id' => $product->id,
                 'quantity' => $item['quantity'],
                 'price' => $hargaMenu,
                 'subtotal' => $subtotal,
             ]);
+
+            // Kurangi stok produk
+            if ($product->stock < $item['quantity']) {
+                throw new \Exception('Stok tidak mencukupi untuk ' . $product->name);
+            }
+            $product->stock -= $item['quantity'];
+            $product->save();
         }
-    
-        // Redirect ke halaman struk
-        return redirect()->route('struk', ['id' => $transaction->id, 'payment_amount' => $input['cash_amount'] ?? $input['total_amount']]);
+
+        return redirect()->route('struk', [
+            'id' => $transaction->id,
+            'payment_amount' => $input['cash_amount'] ?? $input['total_amount'],
+        ]);
     }
-    
+
+
 
 
     public function showStruk($id, Request $request)
