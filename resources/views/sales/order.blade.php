@@ -279,7 +279,7 @@
                                 <!-- Input untuk jumlah yang dibayar -->
                                 <div id="cashAmountSection" class="form-group mt-3">
                                     <label for="cashAmount">Jumlah yang Dibayar:</label>
-                                    <input type="number" class="form-control" id="cashAmount"
+                                    <input type="number" name="cash_amount" class="form-control" id="cashAmount"
                                         placeholder="Masukkan jumlah uang yang dibayar" oninput="validatePayment()">
                                     <small id="error-message" style="color: red; display: none;">Jumlah uang yang dimasukkan
                                         kurang dari total yang harus dibayar.</small>

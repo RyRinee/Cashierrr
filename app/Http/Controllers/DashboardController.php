@@ -20,10 +20,10 @@ class DashboardController extends Controller
         $employeeCount = User::where('role', 'employee')->count();
 
         // Menghitung jumlah transaksi masuk
-        $transactionCount = Transaction::where('status', 'masuk')->count();
+        // $transactionCount = Transaction::where('status', 'masuk')->count();
 
         // Kirim data ke view
-        return view('dashboard.admin', compact('adminCount', 'employeeCount', 'transactionCount'));
+        return view('dashboard.admin', compact('adminCount', 'employeeCount'));
     }
 
 }

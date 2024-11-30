@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('date');
             $table->decimal('total_amount', 15, 2);
+            $table->decimal('cash_amount', 15, 2);
             $table->string('payment_method'); // Menambahkan kolom payment_method
             $table->timestamps();
         });
