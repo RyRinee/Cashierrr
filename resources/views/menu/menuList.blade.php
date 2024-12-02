@@ -18,27 +18,21 @@
                 <div class="card-body">
                     <div class="table-top">
                         <div class="search-set">
-                            <div class="search-input">
-                                <a class="btn btn-searchset">
-                                    <img src="assets/img/icons/search-white.svg" alt="img">
+                            <div class="search-input" id="search-container">
+                                <a class="btn btn-searchset" id="search-toggle">
+                                    <img src="assets/img/icons/search-white.svg" alt="Search Icon" style="width: 15px;">
                                 </a>
                             </div>
                         </div>
                         <div class="wordset">
                             <ul>
                                 <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf">
-                                        <img src="assets/img/icons/pdf.svg" alt="img">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel">
-                                        <img src="assets/img/icons/excel.svg" alt="img">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
-                                        <img src="assets/img/icons/printer.svg" alt="img">
+                                    <a href="{{ route('menu.export') }}"
+                                        class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Download Excel">
+                                        <img src="assets/img/icons/excel.svg" alt="Excel Icon"
+                                            style="width: 24px; height: 24px; margin-right: 8px;">
+                                        <span>Download Excel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -64,7 +58,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($menus as $menu)
+                                @forelse ($menus as $menu)
                                     <tr>
                                         <td>
                                             <label class="checkboxs">
@@ -90,16 +84,23 @@
                                                 <img src="assets/img/icons/edit.svg" alt="img">
                                             </a>
 
-                                            <a class="me-3 confirm-text" href="javascript:void(0);" data-id="{{ $menu->id }}" data-type="menu">
+                                            <a class="me-3 confirm-text" href="javascript:void(0);"
+                                                data-id="{{ $menu->id }}" data-type="menu">
                                                 <img src="assets/img/icons/delete.svg" alt="img" />
                                             </a>
-                                            <form id="delete-form-{{ $menu->id }}" action="{{ route('deleteMenu', $menu->id) }}" method="POST" style="display: none;">
+                                            <form id="delete-form-{{ $menu->id }}"
+                                                action="{{ route('deleteMenu', $menu->id) }}" method="POST"
+                                                style="display: none;">
                                                 @csrf
                                                 @method('DELETE')
-                                            </form>                                           
+                                            </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada data ditemukan</td>
+                                    </tr>
+                                @endforelse
 
                             </tbody>
                         </table>
@@ -108,4 +109,28 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Menambahkan input pencarian secara dinamis setelah tombol diklik
+        document.getElementById('search-toggle').addEventListener('click', function() {
+            var searchContainer = document.getElementById('search-container');
+    
+            // Memeriksa apakah input sudah ada, jika belum, menambahkannya
+            if (!document.getElementById('search-input-field')) {
+                var searchInputHTML = `
+                    <form action="{{ route('menuList') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="search" id="search-input-field" class="form-control" placeholder="Cari menu..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-searchset">
+                                <img src="assets/img/icons/search-white.svg" alt="Search Icon" style="width: 20px;">
+                            </button>
+                        </div>
+                    </form>
+                `;
+                // Menambahkan input pencarian ke dalam container
+                searchContainer.innerHTML = searchInputHTML;
+            }
+        });
+    </script>
 @endsection

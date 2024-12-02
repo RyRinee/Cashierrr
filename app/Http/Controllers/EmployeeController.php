@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 use App\Models\User; // Pastikan ini memang model yang ingin digunakan untuk Employee
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EmployeeExport;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = User::where('role', 'employee')->get();
+        $employees = User::when($request->search, function ($query) use ($request) {
+            return $query->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('email', 'like', '%' . $request->search . '%');
+        })->get();
+
         return view('employee.listEmployee', compact('employees'));
     }
 
@@ -118,5 +124,10 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('employeeList')->with('successdelete', 'Karyawan Berhasil Dihapus');
+    }
+
+    public function export()
+    {
+        return Excel::download(new MenuExport, 'employee_data.xlsx');
     }
 }

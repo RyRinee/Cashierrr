@@ -8,6 +8,9 @@ use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Exports\TransactionExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class TransactionController extends Controller
 {
@@ -19,10 +22,26 @@ class TransactionController extends Controller
         return view('sales.transaction');
     }
 
-    public function transactions () {
-        $transactions = Transaction::with('details', 'user', 'menu')->get();
+    public function transactions(Request $request) 
+    {
+        // Menambahkan filter pencarian jika ada input 'search'
+        $transactions = Transaction::with('details', 'user', 'menu')
+            ->when($request->search, function ($query) use ($request) {
+                return $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('details', function ($q) use ($request) {
+                    $q->whereHas('menu', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->search . '%')
+                          ->orWhere('category', 'like', '%' . $request->search . '%');
+                    });
+                });
+            })
+            ->get();
+    
         return view('transactions.details', compact('transactions'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -144,5 +163,10 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new MenuExport, 'transaction_data.xlsx');
     }
 }

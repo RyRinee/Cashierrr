@@ -33,16 +33,11 @@
                         <div class="wordset">
                             <ul>
                                 <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img
-                                            src="assets/img/icons/pdf.svg" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img
-                                            src="assets/img/icons/excel.svg" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img
-                                            src="assets/img/icons/printer.svg" alt="img"></a>
+                                    <a href="{{ route('employee.export') }}" class="btn btn-outline-primary d-flex align-items-center" 
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Download Excel">
+                                        <img src="assets/img/icons/excel.svg" alt="Excel Icon" style="width: 24px; height: 24px; margin-right: 8px;">
+                                        <span>Download Excel</span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -108,5 +103,28 @@
 
         </div>
     </div>
+
+    <script>
+        // Menambahkan input pencarian secara dinamis setelah tombol diklik
+        document.getElementById('search-toggle').addEventListener('click', function() {
+            var searchContainer = document.getElementById('search-container');
+    
+            // Memeriksa apakah input sudah ada, jika belum, menambahkannya
+            if (!document.getElementById('search-input-field')) {
+                var searchInputHTML = `
+                    <form action="{{ route('menuList') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="search" id="search-input-field" class="form-control" placeholder="Cari menu..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-searchset">
+                                <img src="assets/img/icons/search-white.svg" alt="Search Icon" style="width: 20px;">
+                            </button>
+                        </div>
+                    </form>
+                `;
+                // Menambahkan input pencarian ke dalam container
+                searchContainer.innerHTML = searchInputHTML;
+            }
+        });
+    </script>
 
 @endsection

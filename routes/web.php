@@ -30,6 +30,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/editMenu/{menu}', 'edit')->name('editMenu');
         Route::post('/updateMenu/{menu}', 'update')->name('updateMenu');
         Route::delete('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
+        Route::get('/menu/export', [MenuController::class, 'export'])->name('menu.export');
     });
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employeeList', 'index')->name('employeeList');
@@ -38,12 +39,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/editEmployee/{id}', 'edit')->name('editEmployee');
         Route::post('/updateEmployee/{id}', 'update')->name('updateEmployee');
         Route::delete('/deleteEmployee/{id}', 'destroy')->name('deleteEmployee');
+        Route::get('/employee/export', [MenuController::class, 'export'])->name('employee.export');
     });
     Route::controller(TransactionController::class)->group(function () {
         Route::get('/transactionDetails', 'transactions')->name('transactionDetails');
         Route::get('/transactionEdit/{id}', 'edit')->name('transactionEdit');
         Route::post('/transactionUpdate/{id}', 'update')->name('transactionUpdate');
         Route::delete('/deleteTransactions/{id}', 'destroy')->name('deleteTransactions');
+        Route::get('/transaction/export', [MenuController::class, 'export'])->name('transaction.export');
     });
 
 });

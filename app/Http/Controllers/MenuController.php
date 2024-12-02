@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MenuExport;
 
 class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menus = Menu::all();
+        // Menambahkan filter pencarian jika ada input 'search'
+        $menus = Menu::when($request->search, function ($query) use ($request) {
+            return $query->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('category', 'like', '%' . $request->search . '%');
+        })->get();
+
         return view('menu.menuList', compact('menus'));
     }
 
@@ -120,5 +127,10 @@ class MenuController extends Controller
     {
         $menus = Menu::all();
         return view('sales.order', compact('menus'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new MenuExport, 'menu_data.xlsx');
     }
 }
