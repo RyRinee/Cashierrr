@@ -232,6 +232,7 @@
                                 alt="{{ $menu->name }}">
                             <div class="card-body">
                                 <p class="card-text text-capitalize">{{ $menu->category }}</p>
+                                <p class="card-text text-capitalize">{{ $menu->stock }}</p>
                                 <h5 class="card-title">{{ $menu->name }}</h5>
                                 <p class="card-text">Rp.{{ $menu->price }}</p>
                                 <button class="btn btn-order"
