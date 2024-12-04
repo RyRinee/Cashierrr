@@ -198,11 +198,35 @@
 
     <div class="page-wrapper ms-0">
         <div class="content">
-            <div class="page-header">
+            <div class="page-wrapper ms-0">
+                <div class="col-lg-12 col-sm-12 tabs_wrapper">
+                    <ul class="tabs owl-carousel owl-theme owl-product border-0">
+                        <li class="active" id="all" data-category="all">
+                            <div class="product-details">
+                                <img src="assets/img/product/product62.png" alt="img" />
+                                <h6>All</h6>
+                            </div>
+                        </li>
+                        <li id="makanan" data-category="makanan">
+                            <div class="product-details">
+                                <img src="assets/img/product/product62.png" alt="img" />
+                                <h6>Makanan</h6>
+                            </div>
+                        </li>
+                        <li id="minuman" data-category="minuman">
+                            <div class="product-details">
+                                <img src="assets/img/product/product62.png" alt="img" />
+                                <h6>Minuman</h6>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
             </div>
-            <div class="row">
+            <div class="row" id="menu-container">
                 @foreach ($menus as $menu)
-                    <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12 menu-item"
+                        data-category="{{ strtolower($menu->category) === 'makanan' ? 'makanan' : 'minuman' }}">
                         <div class="card" style="width: 16rem; font-size: 0.9rem;">
                             <img src="{{ asset('storage/image/' . $menu->image) }}" class="card-img-top"
                                 alt="{{ $menu->name }}">
@@ -222,6 +246,7 @@
                     </div>
                 @endforeach
             </div>
+
         </div>
     </div>
 
@@ -281,7 +306,8 @@
                                     <label for="cashAmount">Jumlah yang Dibayar:</label>
                                     <input type="number" name="cash_amount" class="form-control" id="cashAmount"
                                         placeholder="Masukkan jumlah uang yang dibayar" oninput="validatePayment()">
-                                    <small id="error-message" style="color: red; display: none;">Jumlah uang yang dimasukkan
+                                    <small id="error-message" style="color: red; display: none;">Jumlah uang yang
+                                        dimasukkan
                                         kurang dari total yang harus dibayar.</small>
                                 </div>
 
@@ -310,6 +336,35 @@
 
 
     <script>
+        document.querySelectorAll('.tabs li').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Hapus kelas 'active' dari semua tab
+                document.querySelectorAll('.tabs li').forEach(t => t.classList.remove('active'));
+
+                // Tambahkan kelas 'active' ke tab yang diklik
+                this.classList.add('active');
+
+                const selectedCategory = this.getAttribute('data-category');
+
+                // Filter menu berdasarkan kategori
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    if (selectedCategory === 'all' || item.getAttribute('data-category') ===
+                        selectedCategory) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Menampilkan semua menu secara default
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.style.display = 'block';
+            });
+        });
+
         let cartItems = []; // Menyimpan item dalam keranjang
         let isModalOpen = false; // Flag untuk mencegah modal terbuka berulang kali
         let isFooterCartShown = false; // Untuk memastikan footer cart hanya muncul sekali
@@ -551,6 +606,6 @@
         document.getElementById('checkoutButton').addEventListener('click', (event) => {
             event.preventDefault();
             redirectToTransaction();
-        }); 
+        });
     </script>
 @endsection

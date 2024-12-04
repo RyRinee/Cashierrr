@@ -54,9 +54,9 @@
                         <a href="javascript:void(0);" class="responsive-search">
                             <i class="fa fa-search"></i>
                         </a>
-                        <form action="#">
+                        <form action="{{ route('order') }}" method="GET">
                             <div class="searchinputs">
-                                <input type="text" placeholder="Search Here ...">
+                                <input type="text" name="search" placeholder="Search Here ...">
                                 <div class="search-addon">
                                     <span><img src="assets/img/icons/closes.svg" alt="img"></span>
                                 </div>

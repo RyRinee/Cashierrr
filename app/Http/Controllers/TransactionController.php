@@ -33,7 +33,7 @@ class TransactionController extends Controller
                 ->orWhereHas('details', function ($q) use ($request) {
                     $q->whereHas('menu', function ($q) use ($request) {
                         $q->where('name', 'like', '%' . $request->search . '%')
-                          ->orWhere('category', 'like', '%' . $request->search . '%');
+                            ->orWhere('category', 'like', '%' . $request->search . '%');
                     });
                 });
             })
@@ -46,9 +46,15 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $menus = Menu::all();
+        $menus = Menu::query()
+            ->when($request->search, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('category', 'like', '%' . $request->search . '%');
+            })
+            ->get();
+        
         return view('sales.order', compact('menus'));
     }
 

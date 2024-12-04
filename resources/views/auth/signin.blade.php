@@ -28,9 +28,6 @@
             <div class="login-wrapper">
                 <div class="login-content">
                     <div class="login-userset">
-                        <div class="login-logo">
-                            <img src="assets/img/logo.png" alt="img">
-                        </div>
                         <div class="login-userheading">
                             <h3>Sign In</h3>
                             <h4>Please login to your account</h4>
@@ -57,9 +54,6 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="signinform text-center">
-                            <h4>Don’t have an account? <a href="signup.html" class="hover-a">Sign Up</a></h4>
-                        </div>
                     </div>
                 </div>
                 <div class="login-img">

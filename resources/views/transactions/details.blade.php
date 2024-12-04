@@ -77,37 +77,10 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a href="sales-details.html" class="dropdown-item"><img
-                                                        src="assets/img/icons/eye1.svg" class="me-2" alt="img">Sale
-                                                    Detail</a>
-                                            </li>
-                                            <li>
-                                                <a href="edit-sales.html" class="dropdown-item"><img
-                                                        src="assets/img/icons/edit.svg" class="me-2" alt="img">Edit
-                                                    Sale</a>
-                                            </li>
-                                            <li>
                                                 <a href="javascript:void(0);" class="dropdown-item"
                                                     data-bs-toggle="modal" data-bs-target="#showpayment-{{ $transaction->id }}"><img
                                                         src="assets/img/icons/dollar-square.svg" class="me-2"
                                                         alt="img">Show Payments</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="dropdown-item"
-                                                    data-bs-toggle="modal" data-bs-target="#createpayment"><img
-                                                        src="assets/img/icons/plus-circle.svg" class="me-2"
-                                                        alt="img">Create Payment</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="dropdown-item"><img
-                                                        src="assets/img/icons/download.svg" class="me-2"
-                                                        alt="img">Download pdf</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);"
-                                                    class="dropdown-item confirm-text"><img
-                                                        src="assets/img/icons/delete1.svg" class="me-2"
-                                                        alt="img">Delete Sale</a>
                                             </li>
                                         </ul>
                                     </td>
