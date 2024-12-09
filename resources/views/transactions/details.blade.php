@@ -30,9 +30,30 @@
                                         <span>Download Excel</span>
                                     </a>
                                 </li>
+                                <li>
+
+                                    <!-- Filter Dropdown -->
+                                    <select id="filterPeriod" class="form-select">
+                                        <option value="all">All</option>
+                                        <option value="day" {{ request('filter') == 'day' ? 'selected' : '' }}>Per Hari</option>
+                                        <option value="week" {{ request('filter') == 'week' ? 'selected' : '' }}>Per Minggu</option>
+                                        <option value="month" {{ request('filter') == 'month' ? 'selected' : '' }}>Per Bulan</option>
+                                    </select>
+
+                                    {{-- <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="select" name="category">
+                                            <option>Choose Category</option>
+                                            <option value="makanan">Food</option>
+                                            <option value="minuman">Drink</option>
+                                        </select>
+                                    </div> --}}
+                                    
+                                </li>
                             </ul>
                         </div>
                     </div>
+                    
 
 
 
@@ -117,7 +138,7 @@
                                     <th>Qty</th>
                                     <th>Price</th>
                                     <th>Subtotal</th>
-                                    <th>Paid By </th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,18 +150,6 @@
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->subtotal }}</td>
-                                        <td>
-                                            <a class="me-2" href="javascript:void(0);">
-                                                <img src="assets/img/icons/printer.svg" alt="img">
-                                            </a>
-                                            <a class="me-2" href="javascript:void(0);" data-bs-target="#editpayment"
-                                                data-bs-toggle="modal" data-bs-dismiss="modal">
-                                                <img src="assets/img/icons/edit.svg" alt="img">
-                                            </a>
-                                            <a class="me-2 confirm-text" href="javascript:void(0);">
-                                                <img src="assets/img/icons/delete.svg" alt="img">
-                                            </a>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -285,6 +294,12 @@
 </div>
 
 <script>
+      document.getElementById('filterPeriod').addEventListener('change', function() {
+            var filter = this.value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('filter', filter); // Mengatur parameter filter di URL
+            window.location.href = url.toString(); // Redirect ke URL dengan parameter filter
+        });
     // Menambahkan input pencarian secara dinamis setelah tombol diklik
     document.getElementById('search-toggle').addEventListener('click', function() {
         var searchContainer = document.getElementById('search-container');

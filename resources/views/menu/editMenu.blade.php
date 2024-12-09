@@ -30,7 +30,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/updateMenu/{{ $menu->id }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('updateMenu', $menu->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-3 col-sm-6 col-12">
@@ -57,14 +57,8 @@
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label>Stock</label>
-                                    <input type="number" name="stock" value="{{$menu->stock}}">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control" name="description" value="{{$menu->description}}"></textarea>
+                                    <label>{{ $menu->name }} - Stock</label>
+                                    <input type="number" name="stocks[{{ $menu->id }}]" value="{{ $menu->stock }}">
                                 </div>
                             </div>
                             <!-- Form input untuk memilih gambar -->

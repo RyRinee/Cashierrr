@@ -57,4 +57,6 @@ class TransactionDetailController extends Controller
         $transactionDetail->delete();
         return redirect()->route('transactions.details')->with('success', 'Transaction detail deleted successfully');
     }
+
+
 }

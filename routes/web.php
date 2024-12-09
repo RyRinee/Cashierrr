@@ -20,18 +20,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/adminDash', 'index')->name('adminDash');
-
-});
-
-    Route::controller(MenuController::class)->group(function () {
-        Route::get('/menuList', 'index')->name('menuList');
-        Route::get('/addMenu', 'create')->name('addMenu');
-        Route::post('/createMenu', 'store')->name('createMenu');
-        Route::get('/editMenu/{menu}', 'edit')->name('editMenu');
-        Route::post('/updateMenu/{menu}', 'update')->name('updateMenu');
-        Route::delete('/deleteMenu/{menu}', 'destroy')->name('deleteMenu');
-        Route::get('/menu/export', [MenuController::class, 'export'])->name('menu.export');
-    });
+    }); 
+    Route::get('/menuListAdmin', [MenuController::class, 'indexAdmin'])->name('menuListAdmin');
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employeeList', 'index')->name('employeeList');
         Route::get('/addEmployee', 'create')->name('addEmployee');
@@ -47,16 +37,27 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/transactionUpdate/{id}', 'update')->name('transactionUpdate');
         Route::delete('/deleteTransactions/{id}', 'destroy')->name('deleteTransactions');
         Route::get('/transaction/export', [MenuController::class, 'export'])->name('transaction.export');
+        Route::get('/rekap', 'recapitulate')->name('rekap');
+        Route::get('/rekap/export', 'exportRekap')->name('transaction.exportRekap');
+
     });
 
 });
 
-
 Route::middleware(['auth', 'role:employee'])->group(function () {
+    Route::get('/menuList', [MenuController::class, 'index'])->name('menuList');
+    Route::get('/addMenu', [MenuController::class, 'create'])->name('addMenu');
+    Route::post('/createMenu', [MenuController::class, 'store'])->name('createMenu');
+    Route::get('/editMenu/{id}', [MenuController::class, 'edit'])->name('editMenu');
+    Route::post('/updateMenu/{id}', [MenuController::class, 'update'])->name('updateMenu');
+    Route::delete('/deleteMenu/{id}', [MenuController::class, 'destroy'])->name('deleteMenu');
+    Route::get('/menu/export', [MenuController::class, 'export'])->name('menu.export');
+
+});
+
+
+Route::middleware(['auth', 'role:cashier'])->group(function () {
     Route::get('/order', [TransactionController::class, 'create'])->name('order');
-    // Route::get('/ordertest', function () {
-    //     return view('sales.transaction');
-    // })->name('order');
     Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction');
     Route::get('/transaction/struk/{id}', [TransactionController::class, 'showStruk'])->name('struk');
 

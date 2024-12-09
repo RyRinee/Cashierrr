@@ -93,9 +93,6 @@ class EmployeeController extends Controller
 
         // Hapus gambar lama jika ada dan simpan gambar baru
         if ($request->hasFile('image')) {
-            if ($employee->image) {
-                unlink(public_path('storage/image/' . $employee->image));
-            }
             $image = $request->file('image');
             $image_name = time() . '-' . $image->getClientOriginalName();
             $image->move(public_path('storage/image'), $image_name);

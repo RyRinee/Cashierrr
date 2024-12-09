@@ -3,7 +3,7 @@
     <div class="page-wrapper">
         <div class="content">
             <div class="row">
-                <div class="col-lg-4 col-sm-6 col-12 d-flex">
+                <div class="col-lg-3 col-sm-6 col-12 d-flex">
                     <div class="dash-count">
                         <div class="dash-counts">
                             <h4>{{ $adminCount }}</h4>
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-12 d-flex">
+                <div class="col-lg-3 col-sm-6 col-12 d-flex">
                     <div class="dash-count das1">
                         <div class="dash-counts">
                             <h4>{{ $employeeCount }}</h4>
@@ -25,7 +25,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-12 d-flex">
+                <div class="col-lg-3 col-sm-6 col-12 d-flex">
+                    <div class="dash-count das1">
+                        <div class="dash-counts">
+                            <h4>{{ $cashierCount }}</h4>
+                            <h5>Cashier</h5>
+                        </div>
+                        <div class="dash-imgs">
+                            <i data-feather="user-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12 d-flex">
                     <div class="dash-count das2">
                         <div class="dash-counts">
                             <h4>{{ $transactionCount }}</h4>

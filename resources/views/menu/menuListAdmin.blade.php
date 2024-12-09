@@ -4,27 +4,10 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Menu List</h4>
-                    <h6>Manage your menu</h6>
-                </div>
-                <div class="page-btn">
-                    <a href="{{ route('addMenu') }}" class="btn btn-added"><img src="assets/img/icons/plus.svg" alt="img"
-                            class="me-1" />Add New Menu</a>
+                    <h4>Product List</h4>
+                    <h6>Manage your products</h6>
                 </div>
             </div>
-
-            @if (session('successupdate'))
-                <div class="alert alert-success">
-                    {{ session('successupdate') }}
-                </div>
-            @endif
-
-            @if (session('errorupdate'))
-                <div class="alert alert-danger">
-                    {{ session('errorupdate') }}
-                </div>
-            @endif
-
 
             <div class="card">
                 <div class="card-body">
@@ -61,12 +44,11 @@
                                             <span class="checkmarks"></span>
                                         </label>
                                     </th>
-                                    <th>Menu Name</th>
+                                    <th>Product Name</th>
                                     <th>Category</th>
                                     <th>Price</th>
                                     <th>Stock</th>
                                     <th>Status</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,30 +70,9 @@
                                         <td>{{ number_format($menu->price, 2) }}</td>
                                         <td>{{ $menu->stock }}</td>
                                         <td>{{ $menu->status }}</td>
-                                        <td>
-                                            <a class="me-3" href="#">
-                                                <img src="assets/img/icons/eye.svg" alt="img">
-                                            </a>
-                                            <a class="me-3" href="{{ route('editMenu', $menu->id) }}">
-                                                <img src="assets/img/icons/edit.svg" alt="img">
-                                            </a>
-
-                                            <a class="me-3 confirm-text" href="javascript:void(0);"
-                                                data-id="{{ $menu->id }}" data-type="menu">
-                                                <img src="assets/img/icons/delete.svg" alt="img" />
-                                            </a>
-                                            <form id="delete-form-{{ $menu->id }}"
-                                                action="{{ route('deleteMenu', $menu->id) }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </td>
                                     </tr>
                                 @empty
-                                    {{-- <tr>
-                                        <td colspan="7" class="text-center">Tidak ada data ditemukan</td>
-                                    </tr> --}}
+                                    <p>No menus available.</p>
                                 @endforelse
 
                             </tbody>

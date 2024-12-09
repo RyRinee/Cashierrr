@@ -25,6 +25,8 @@ class AuthController extends Controller
             if($role === 'admin'){
                 return redirect()->intended('adminDash');
             }elseif($role === 'employee'){
+                return redirect()->intended('menuList');
+            }elseif($role === 'cashier'){
                 return redirect()->intended('order');
             }
         }else{

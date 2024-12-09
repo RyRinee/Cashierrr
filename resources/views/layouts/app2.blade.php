@@ -31,9 +31,7 @@
 </head>
 
 <body>
-    <div id="global-loader">
-        <div class="whirly-loader"> </div>
-    </div>
+
     <div class="main-wrappers">
         <div class="header">
 
@@ -69,25 +67,34 @@
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <span class="user-img"><img src="assets/img/profiles/avator1.jpg" alt="">
-                            <span class="status online"></span></span>
+                        <span class="user-img">
+                            <!-- Menggunakan gambar dinamis -->
+                            <img src="{{ asset('storage/image/' . auth()->user()->image) }}" alt="">
+                            <span class="status online"></span>
+                        </span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-                                <span class="user-img"><img src="assets/img/profiles/avator1.jpg" alt="">
-                                    <span class="status online"></span></span>
+                                <span class="user-img">
+                                    <!-- Menampilkan avatar dari pengguna yang sedang login -->
+                                    <img src="{{ asset('storage/image/' . auth()->user()->image) }}" alt="">
+                                    <span class="status online"></span>
+                                </span>
                                 <div class="profilesets">
+                                    <!-- Menampilkan nama dan role pengguna yang sedang login -->
                                     <h6>{{ auth()->user()->name }}</h6>
                                     <h5>{{ auth()->user()->role }}</h5>
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="{{ route('login') }}"><img
-                                src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
+                            <a class="dropdown-item logout pb-0" href="{{ route('login') }}">
+                                <img src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout
+                            </a>
                         </div>
                     </div>
                 </li>
+                
             </ul>
 
 

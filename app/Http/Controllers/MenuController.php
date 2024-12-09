@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MenuExport;
+use Illuminate\Support\Facades\Log;
+
 
 class MenuController extends Controller
 {
@@ -23,6 +26,18 @@ class MenuController extends Controller
         return view('menu.menuList', compact('menus'));
     }
 
+
+    public function indexAdmin(Request $request)
+    {
+        // Menambahkan filter pencarian jika ada input 'search'
+        $menus = Menu::when($request->search, function ($query) use ($request) {
+            return $query->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('category', 'like', '%' . $request->search . '%');
+        })->get();
+
+        return view('menu.menuListAdmin', compact('menus'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -34,37 +49,7 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        // Validasi input
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|in:makanan,minuman',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
-        ]);
 
-        // Tentukan status berdasarkan stok
-        $status = ($validatedData['stock'] > 0) ? 'tersedia' : 'habis';
-
-        // Menyiapkan data input untuk disimpan
-        $input = $validatedData;
-        $input['status'] = $status; // Menetapkan status otomatis
-
-        // Menyimpan gambar dengan Storage
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = time() . '-' . $image->getClientOriginalName();
-            $image->move(public_path('storage/image'), $image_name);
-            $input['image'] = $image_name;
-        }
-
-        // Menyimpan menu ke dalam database
-        Menu::create($input);
-
-        return redirect('menuList')->with('successcreate', 'Menu Baru Ditambahkan');
-    }
 
 
     public function edit($id)
@@ -74,43 +59,29 @@ class MenuController extends Controller
     }
 
 
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request)
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|in:makanan,minuman',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'description' => 'required|string|max:500',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-        ]);
-
-        // Tentukan status berdasarkan stok
-        $status = ($validatedData['stock'] > 0) ? 'tersedia' : 'habis';
-        $input = $validatedData;
-        $input['status'] = $status;
-
-        // Perbarui gambar jika ada file baru yang diunggah
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            if ($menu->image) {
-                unlink(public_path('storage/image/' . $menu->image));
+        // Mengambil data stok yang dikirimkan dari form
+        $stocks = $request->input('stocks');
+    
+        // Memperbarui stok untuk setiap menu
+        foreach ($stocks as $menuId => $stock) {
+            // Mencari menu berdasarkan ID
+            $menu = Menu::find($menuId);
+    
+            if ($menu) {
+                // Memperbarui stok
+                $menu->stock = $stock;
+                $menu->save();
             }
-            // Simpan gambar baru
-            $image = $request->file('image');
-            $image_name = time() . '-' . $image->getClientOriginalName();
-            $image->move(public_path('storage/image'), $image_name);
-            $input['image'] = $image_name;
         }
-
-        // Update data menu di database
-        $menu->update($input);
-
-        return redirect()->route('menuList')->with('successupdate', 'Menu Berhasil Diperbarui');
+    
+        // Mengarahkan kembali dengan pesan sukses
+        return redirect()->route('menuList')->with('successupdate', 'Stok menu berhasil diperbarui.');
     }
+    
 
-
+    
     public function destroy(Menu $menu)
     {
         // Hapus gambar dari direktori jika ada

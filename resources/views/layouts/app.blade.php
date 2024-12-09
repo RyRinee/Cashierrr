@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
 
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" />
+
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap4.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome/css/fontawesome.min.css')}}">
@@ -74,25 +76,34 @@
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <span class="user-img"><img src="{{asset('assets/img/profiles/avator1.jpg')}}" alt="">
-                            <span class="status online"></span></span>
+                        <span class="user-img">
+                            <!-- Menggunakan gambar dinamis -->
+                            <img src="{{ asset('storage/image/' . auth()->user()->image) }}" alt="">
+                            <span class="status online"></span>
+                        </span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-                                <span class="user-img"><img src="{{asset('assets/img/profiles/avator1.jpg')}}" alt="">
-                                    <span class="status online"></span></span>
+                                <span class="user-img">
+                                    <!-- Menampilkan avatar dari pengguna yang sedang login -->
+                                    <img src="{{ asset('storage/image/' . auth()->user()->image) }}" alt="">
+                                    <span class="status online"></span>
+                                </span>
                                 <div class="profilesets">
-                                    <h6>John Doe</h6>
-                                    <h5>Admin</h5>
+                                    <!-- Menampilkan nama dan role pengguna yang sedang login -->
+                                    <h6>{{ auth()->user()->name }}</h6>
+                                    <h5>{{ auth()->user()->role }}</h5>
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="{{ route('login') }}"><img
-                                    src="{{asset('assets/img/icons/log-out')}}.svg" class="me-2" alt="img">Logout</a>
+                            <a class="dropdown-item logout pb-0" href="{{ route('login') }}">
+                                <img src="assets/img/icons/log-out.svg" class="me-2" alt="img">Logout
+                            </a>
                         </div>
                     </div>
                 </li>
+                
             </ul>
 
 
@@ -111,10 +122,7 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="{{ Request::routeIs('adminDash') ? 'active' : '' }}">
-                            <a href="{{route('adminDash')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
-                                    Dashboard</span> </a>
-                        </li>
+                        @if (auth()->user()->role === 'employee')
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}"
                                     alt="img"><span>
@@ -124,7 +132,20 @@
                                 <li><a href="{{ route('addMenu') }}" class="{{ Request::routeIs('addMenu') ? 'active' : '' }}">Add Menu </a></li>
                             </ul>
                         </li>
-
+                        @endIf
+                        @if (auth()->user()->role === 'admin')
+                        <li class="{{ Request::routeIs('adminDash') ? 'active' : '' }}">
+                            <a href="{{route('adminDash')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
+                                    Dashboard</span> </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}"
+                                    alt="img"><span>
+                                    Menu</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{ route('menuListAdmin') }}" class="{{ Request::routeIs('menuListAdmin') ? 'active' : '' }}">Menu List</a></li>
+                            </ul>
+                        </li>
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/users1.svg')}}"
                                     alt="img">
@@ -140,12 +161,14 @@
                                     <span>Transactions</span> <span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{ route('transactionDetails') }}" class="{{ Request::routeIs('transactionDetails') ? 'active' : '' }}"> Transaction Details </a></li>
+                                <li><a href="{{ route('rekap') }}" class="{{ Request::routeIs('rekap') ? 'active' : '' }}"> Rekap </a></li>
                             </ul>
                         </li>
+                        @endIf
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>  
         <div>
             @yield('content');
         </div>

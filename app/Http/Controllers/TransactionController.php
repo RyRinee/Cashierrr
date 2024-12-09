@@ -9,7 +9,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Exports\TransactionExport;
+use App\Exports\RekapExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 
 class TransactionController extends Controller
@@ -22,7 +24,7 @@ class TransactionController extends Controller
         return view('sales.transaction');
     }
 
-    public function transactions(Request $request) 
+    public function transactions(Request $request)
     {
         // Menambahkan filter pencarian jika ada input 'search'
         $transactions = Transaction::with('details', 'user', 'menu')
@@ -36,6 +38,22 @@ class TransactionController extends Controller
                             ->orWhere('category', 'like', '%' . $request->search . '%');
                     });
                 });
+            })
+            ->when($request->filter, function ($query) use ($request) {
+                $filter = $request->filter;
+    
+                // Filter per hari (misalnya hari ini)
+                if ($filter == 'day') {
+                    return $query->whereDate('date', Carbon::today());
+                }
+                // Filter per minggu (misalnya minggu ini)
+                elseif ($filter == 'week') {
+                    return $query->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                }
+                // Filter per bulan (misalnya bulan ini)
+                elseif ($filter == 'month') {
+                    return $query->whereMonth('date', Carbon::now()->month);
+                }
             })
             ->get();
     
@@ -139,40 +157,83 @@ class TransactionController extends Controller
     
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Transaction $transactions)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
-    }
-
     public function export()
     {
         return Excel::download(new MenuExport, 'transaction_data.xlsx');
     }
-}
+
+    public function recapitulate(Request $request)
+    {
+        // Ambil tahun dan bulan yang difilter
+        $year = $request->year ?? now()->year;
+        $month = $request->month;
+        $dayOrWeek = $request->day_or_week;
+        $day = $request->day;
+        $week = $request->week;
+
+        $query = Transaction::query();
+
+        // Filter berdasarkan tahun
+        $query->whereYear('date', $year);
+
+        // Filter berdasarkan bulan
+        if ($month) {
+            $query->whereMonth('date', $month);
+        }
+
+        // Filter berdasarkan hari
+        if ($dayOrWeek == 'day' && $day) {
+            $query->whereDate('date', Carbon::parse($day));
+        }
+
+        // Filter berdasarkan minggu
+        if ($dayOrWeek == 'week' && $week) {
+            $query->whereBetween('date', [
+                Carbon::now()->setISODate($year, $week)->startOfWeek(),
+                Carbon::now()->setISODate($year, $week)->endOfWeek(),
+            ]);
+        }
+
+        // Ambil data transaksi
+        $transactions = $query->get();
+
+        // Rekap total transaksi per tanggal
+        $recap = $transactions->groupBy(function ($transaction) {
+            return Carbon::parse($transaction->date)->format('d-m-Y'); // Mengelompokkan berdasarkan tanggal (d-m-Y)
+        });
+
+        // Hitung total untuk setiap tanggal
+        $recapTotals = $recap->map(function ($group) {
+            return $group->sum('total_amount'); // Total transaksi untuk setiap tanggal
+        });
+
+        // Kirim data ke view
+        return view('transactions.rekap', compact('recapTotals', 'transactions'));
+    }
+    
+    
+
+    public function exportRekap(Request $request)
+    {
+        // Ambil transaksi yang sudah difilter (misalnya berdasarkan tahun dan bulan)
+        $query = Transaction::query();
+
+        if ($request->has('year')) {
+            $query->whereYear('date', $request->year);
+        }
+
+        if ($request->has('month')) {
+            $query->whereMonth('date', $request->month);
+        }
+
+        // Kelompokkan transaksi berdasarkan tanggal dan hitung total per hari
+        $transactions = $query->selectRaw('DATE(date) as date, SUM(total_amount) as total_amount')
+            ->groupBy('date')
+            ->get();
+
+        // Ekspor data ke Excel
+        return Excel::download(new RekapExport($transactions), 'rekap_transaksi.xlsx');
+    }
+
+}    
+

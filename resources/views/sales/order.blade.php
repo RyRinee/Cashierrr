@@ -198,33 +198,34 @@
 
     <div class="page-wrapper ms-0">
         <div class="content">
-            <div class="page-wrapper ms-0">
+            <div class="page-wrapper ms-0 mb-0>
                 <div class="col-lg-12 col-sm-12 tabs_wrapper">
-                    <ul class="tabs owl-carousel owl-theme owl-product border-0">
-                        <li class="active" id="all" data-category="all">
-                            <div class="product-details">
-                                <img src="assets/img/product/product62.png" alt="img" />
-                                <h6>All</h6>
-                            </div>
-                        </li>
-                        <li id="makanan" data-category="makanan">
-                            <div class="product-details">
-                                <img src="assets/img/product/product62.png" alt="img" />
-                                <h6>Makanan</h6>
-                            </div>
-                        </li>
-                        <li id="minuman" data-category="minuman">
-                            <div class="product-details">
-                                <img src="assets/img/product/product62.png" alt="img" />
-                                <h6>Minuman</h6>
-                            </div>
-                        </li>
-                    </ul>
+                <ul class="tabs owl-carousel owl-theme owl-product border-0">
+                    <li class="active" id="all" data-category="all">
+                        <div class="product-details">
+                            <img src="assets/img/product/product62.png" alt="img" />
+                            <h6>All</h6>
+                        </div>
+                    </li>
+                    <li id="makanan" data-category="makanan">
+                        <div class="product-details">
+                            <img src="assets/img/product/product62.png" alt="img" />
+                            <h6>Makanan</h6>
+                        </div>
+                    </li>
+                    <li id="minuman" data-category="minuman">
+                        <div class="product-details">
+                            <img src="assets/img/product/product62.png" alt="img" />
+                            <h6>Minuman</h6>
+                        </div>
+                    </li>
+                </ul>
 
-                </div>
             </div>
-            <div class="row" id="menu-container">
-                @foreach ($menus as $menu)
+        </div>
+        <div class="row" id="menu-container">
+            @foreach ($menus as $menu)
+                @if ($menu->stock > 0)
                     <div class="col-lg-3 col-sm-6 col-12 menu-item"
                         data-category="{{ strtolower($menu->category) === 'makanan' ? 'makanan' : 'minuman' }}">
                         <div class="card" style="width: 16rem; font-size: 0.9rem;">
@@ -245,10 +246,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-
+                @endif
+            @endforeach
         </div>
+
+    </div>
     </div>
 
     <!-- Footer Cart -->
@@ -296,11 +298,11 @@
                                         id="cashPayment" value="Cash" checked onchange="toggleQRIS()">
                                     <label class="form-check-label" for="cashPayment">Cash</label>
                                 </div>
-                                <div class="form-check">
+                                {{-- <div class="form-check">
                                     <input class="form-check-input" type="radio" name="payment_method_option"
                                         id="qrisPayment" value="QRIS" onchange="toggleQRIS()">
                                     <label class="form-check-label" for="qrisPayment">QRIS</label>
-                                </div>
+                                </div> --}}
 
                                 <!-- Input untuk jumlah yang dibayar -->
                                 <div id="cashAmountSection" class="form-group mt-3">
@@ -337,6 +339,8 @@
 
 
     <script>
+      
+
         document.querySelectorAll('.tabs li').forEach(tab => {
             tab.addEventListener('click', function() {
                 // Hapus kelas 'active' dari semua tab
@@ -507,15 +511,23 @@
         }
 
         // Fungsi untuk menambah jumlah item
-        function increaseQuantity(button) {
-            const quantitySpan = button.previousElementSibling;
-            let quantity = parseInt(quantitySpan.textContent);
-            quantity++;
-            quantitySpan.textContent = quantity;
+// Fungsi untuk menambah jumlah item
+function increaseQuantity(button) {
+    const quantitySpan = button.previousElementSibling;
+    let quantity = parseInt(quantitySpan.textContent);
+    const stock = parseInt(button.closest('.card-body').querySelector('.card-text:nth-child(2)').textContent); // Ambil stok dari elemen card
 
-            // Perbarui kuantitas item di keranjang tanpa membuka modal
-            updateItemQuantity(button, quantity);
-        }
+    // Hanya tambahkan kuantitas jika masih ada stok
+    if (quantity < stock) {
+        quantity++;
+        quantitySpan.textContent = quantity;
+
+        // Perbarui kuantitas item di keranjang tanpa membuka modal
+        updateItemQuantity(button, quantity);
+    } else {
+        alert('Maaf, Stok tidak cukup!');
+    }
+}
 
         // Fungsi untuk mengurangi jumlah item
         function decreaseQuantity(button) {
